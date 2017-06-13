@@ -31,13 +31,6 @@
   </head>
 
   <body>
-    {% block navbar %}
-      {% if not standalone_mode %}
-        <header class="top" role="header">
-          {% include 'appbuilder/navbar.html' %}
-        </header>
-      {% endif %}
-    {% endblock %}
 
     {% block body %}
       {% include 'superset/flash_wrapper.html' %}

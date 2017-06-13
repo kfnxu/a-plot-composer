@@ -16,6 +16,7 @@ function modelViewTable(selector, modelView, orderCol, order) {
   let url = '/' + modelView.toLowerCase() + '/api/read';
   url += '?_oc_' + modelView + '=' + orderCol;
   url += '&_od_' + modelView + '=' + order;
+  console.log('welcome.js modelViewTable url', url);
   $.getJSON(url, function (data) {
     const columns = ['dashboard_link', 'creator', 'modified'];
     const tableData = $.map(data.result, function (el) {

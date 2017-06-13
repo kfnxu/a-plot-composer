@@ -208,6 +208,7 @@ const px = function () {
         $.getJSON(this.jsonEndpoint(), (queryResponse) => {
           try {
             vizMap[formData.viz_type](this, queryResponse);
+            console.log("javascripts/modules/superset.js vizMap", queryResponse, formData, vizMap, vizMap[formData.viz_type]);
             this.done(queryResponse);
           } catch (e) {
             this.error('An error occurred while rendering the visualization: ' + e);

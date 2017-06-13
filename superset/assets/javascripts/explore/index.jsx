@@ -23,6 +23,7 @@ const bootstrapData = JSON.parse(exploreViewContainer.getAttribute('data-bootstr
 const controls = getControlsState(bootstrapData, bootstrapData.form_data);
 delete bootstrapData.form_data;
 
+console.log('javascripts/explore/index.jsx', bootstrapData);
 
 // Initial state
 const bootstrappedState = Object.assign(

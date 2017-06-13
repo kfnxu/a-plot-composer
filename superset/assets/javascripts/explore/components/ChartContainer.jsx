@@ -161,6 +161,8 @@ class ChartContainer extends React.PureComponent {
     this.setState({ mockSlice });
     try {
       visMap[this.props.viz_type](mockSlice, this.props.queryResponse);
+      console.log('javascripts/explore/components/ChartContainer.jsx vizMap', visMap, this.props, mockSlice, this.props.queryResponse, visMap[this.props.viz_type]); 
+ 
     } catch (e) {
       this.props.actions.chartRenderingFailed(e);
     }
