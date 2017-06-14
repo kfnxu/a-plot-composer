@@ -988,6 +988,13 @@ class Superset(BaseSupersetView):
 
     @log_this
     @has_access
+    @expose("/panel")
+    def panel(self):
+        return self.render_template(
+            "superset/panel.html")
+
+    @log_this
+    @has_access
     @expose("/explorev2/<datasource_type>/<datasource_id>/")
     def explorev2(self, datasource_type, datasource_id):
         return redirect(url_for(
