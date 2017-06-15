@@ -12,7 +12,6 @@ export default (store) => ({
           dependencies for bundling   */
       const InputSetting = require('./containers/InputSettingContainer').default
       const reducer = require('./modules/inputsetting').default
-
       /*  Add the reducer to the store on key 'dataimport'  */
       injectReducer(store, { key: 'inputSettingKey', reducer })
 

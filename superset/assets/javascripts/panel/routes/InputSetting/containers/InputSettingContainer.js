@@ -7,7 +7,7 @@ import { handleSetting,   handleSettingYear, handleSettingStartYear, handleSetti
     component - in this case, the inputsetting:   */
 
 import InputSettingPage from '../components/InputSetting'
-
+console.log('inputsetting container', connect, InputSettingPage);
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */

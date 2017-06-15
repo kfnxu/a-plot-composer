@@ -6,7 +6,7 @@ export const DATA_ASYNC = 'DATA_ASYNC'
 export const TEXT_ASYNC = 'TEXT_ASYNC'
 export const UPDATE_API_DATA = 'UPDATE_API_DATA'; 
 
-
+console.log('routes/inputsetting/modules/inputsetting');
 // ------------------------------------
 // Actions
 // ------------------------------------

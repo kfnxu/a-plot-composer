@@ -23,7 +23,9 @@ const MOUNT_NODE = document.getElementById('root')
 
 // here is the place to save the material-ui theme for all
 let render = () => {
+  console.log('panel index render');
   const routes = require('./routes/index').default(store)
+  console.log('panel routes', routes, store);
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes} />,
@@ -31,8 +33,8 @@ let render = () => {
   )
 }
 
-/*
-// This code is excluded from production bundle
+
+//// This code is excluded from production bundle
 if (typeof __DEV__ !==  "undefined" && __DEV__ ) {
   if (module.hot) {
     // Development render functions
@@ -62,7 +64,7 @@ if (typeof __DEV__ !==  "undefined" && __DEV__ ) {
     )
   }
 }
-*/
+
 
 // ========================================================
 // Go!

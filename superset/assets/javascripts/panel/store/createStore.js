@@ -21,14 +21,14 @@ export default (initialState = {}) => {
 
   let composeEnhancers = compose
 
-  /*
+  
   if (typeof __DEV__ !==  "undefined" && __DEV__ ) {
     const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     if (typeof composeWithDevToolsExtension === 'function') {
       composeEnhancers = composeWithDevToolsExtension
     }
   }
-  */
+  
 
   // ======================================================
   // Store Instantiation and HMR Setup
@@ -41,6 +41,7 @@ export default (initialState = {}) => {
       ...enhancers
     )
   )
+  console.log('panel store', store); 
   store.asyncReducers = {}
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
