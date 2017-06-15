@@ -19,12 +19,17 @@ const config = {
     sqllab: ['babel-polyfill', APP_DIR + '/javascripts/SqlLab/index.jsx'],
     welcome: ['babel-polyfill', APP_DIR + '/javascripts/welcome.js'],
     profile: ['babel-polyfill', APP_DIR + '/javascripts/profile/index.jsx'],
-    panel: APP_DIR + '/javascripts/panel/index.js',
+    panel: ['babel-polyfill', APP_DIR + '/javascripts/panel/index.js'],
   },
   output: {
     path: BUILD_DIR,
+    publicPath: "/static/assets/dist/",
     filename: `[name].${VERSION_STRING}.entry.js`,
   },
+
+  //devtool: 'inline-source-map',
+  devtool: 'cheap-module-source-map',
+
   resolve: {
     extensions: [
       '.js',
@@ -122,7 +127,7 @@ const config = {
     }),
   ],
 };
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
-}
+//if (process.env.NODE_ENV === 'production') {
+//  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+//}
 module.exports = config;
