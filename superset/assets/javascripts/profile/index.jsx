@@ -10,6 +10,8 @@ import './main.css';
 appSetup();
 
 const profileViewContainer = document.getElementById('app');
+//const profileViewContainer = document.getElementById('js-explore-view-container');
+
 const bootstrap = JSON.parse(profileViewContainer.getAttribute('data-bootstrap'));
 
 const user = bootstrap.user;

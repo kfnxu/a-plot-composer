@@ -48,6 +48,18 @@ const store = createStore(exploreReducer, bootstrappedState,
   compose(applyMiddleware(thunk), initEnhancer(false)),
 );
 
+export const ExploreViewPage = (props) => {
+
+ return (
+  <Provider store={store}>
+    <div>
+      <ExploreViewContainer />
+      <AlertsWrapper />
+    </div>
+  </Provider>
+  );
+}
+/*
 ReactDOM.render(
   <Provider store={store}>
     <div>
@@ -57,4 +69,4 @@ ReactDOM.render(
   </Provider>,
   exploreViewContainer,
 );
-
+*/

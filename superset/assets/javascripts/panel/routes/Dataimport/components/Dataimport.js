@@ -5,6 +5,9 @@ import PropTypes from 'prop-types'
 
 import TablePage from '../components/TablePage'
 
+//will render the page from import itself
+//import ProfileViewPage from '../../../../profile';
+
 export const Dataimport = (props) => {
 
   const styles = {

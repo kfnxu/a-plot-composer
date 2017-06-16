@@ -8,6 +8,7 @@ import Toggle from 'material-ui/Toggle';
 import DatePicker from 'material-ui/DatePicker';
 import {grey400} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
+//just import itself will create the ExpoloreViewPage on the page, look the code for detail
 
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Slider from 'material-ui/Slider';
