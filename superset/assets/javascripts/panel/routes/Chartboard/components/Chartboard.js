@@ -6,7 +6,24 @@ import PropTypes from 'prop-types'
 //import ChartAreaPage from '../../ContentChartboard/components/AreaPage'
 //import TreemapPage from '../../ContentChartboard/components/Treemap'
 
-import ExploreViewPage from '../../../../explore/view';
+//for dynamic return component type see this document:
+//https://facebook.github.io/react/docs/jsx-in-depth.html#choosing-the-type-at-runtime
+//import React from 'react';
+//import { PhotoStory, VideoStory } from './stories';
+//
+//const components = {
+//  photo: PhotoStory,
+//    video: VideoStory
+//    };
+//
+//    function Story(props) {
+//        // Correct! JSX type can be a capitalized variable.
+//        const SpecificStory = components[props.storyType];
+//          return <SpecificStory story={props.story} />;
+//          }
+//
+//import ExploreViewPage from '../../../../explore/view';
+import DashboardViewPage from '../../../../dashboard/view';
 
 export const Chartboard = (props) => {
   const styles = {
@@ -25,8 +42,8 @@ export const Chartboard = (props) => {
             <MultivariateChoroplethMap data={props.chartboardDNode} {...props} />
      */}
 
-     <ExploreViewPage {...props} />
-
+     {/*{<ExploreViewPage {...props} />}*/}
+     {<DashboardViewPage {...props} />}
   </div>
 
  )

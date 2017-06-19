@@ -17,7 +17,7 @@ const utils = require('../modules/utils');
 appSetup();
 
 export function getInitialState(boostrapData) {
-  console.log('dashboard.jsx getInitialState', boostrapData);
+  console.log('dashboard view getinitstate', boostrapData);
   const dashboard = Object.assign({}, utils.controllerInterface, boostrapData.dashboard_data);
   dashboard.firstLoad = true;
 
@@ -60,7 +60,6 @@ function renderAlert() {
 }
 
 function initDashboardView(dashboard) {
-  console.log('dashboard initDashboardView', dashboard);
   render(
     <Header dashboard={dashboard} />,
     document.getElementById('dashboard-header'),
@@ -342,6 +341,41 @@ export function dashboardContainer(dashboard, datasources, userid) {
   });
 }
 
+export default class DashboardViewPage extends React.Component{
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentWillMount() {
+  }
+
+  componentDidMount() {
+    console.log('dashboard view didmount');
+    utils.initJQueryAjax();
+    console.log('dashboard view utils');
+    const dashboardData = $('.dashboard').data('bootstrap');
+    console.log('dashboard view ', dashboardData);
+    const state = getInitialState(dashboardData);
+    console.log('dashboard view ', state);
+    const dashboard = dashboardContainer(state.dashboard, state.datasources, state.user_id);
+    console.log('dashboard view', dashboard);
+    initDashboardView(dashboard);
+    dashboard.init();
+    console.log('dashboard view init');
+  }
+
+  render() {
+     return (
+      <div>
+        <div id="dashboard-header"></div>
+         <div id="grid-container" class="slice-grid gridster"></div>
+      </div>
+     )
+  }
+}
+
+/*
 $(document).ready(() => {
   // Getting bootstrapped data from the DOM
   utils.initJQueryAjax();
@@ -349,7 +383,7 @@ $(document).ready(() => {
 
   const state = getInitialState(dashboardData);
   const dashboard = dashboardContainer(state.dashboard, state.datasources, state.user_id);
-  console.log('dashboard', dashboard, state);
   initDashboardView(dashboard);
   dashboard.init();
 });
+*/

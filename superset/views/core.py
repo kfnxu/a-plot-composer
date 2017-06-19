@@ -992,12 +992,12 @@ class Superset(BaseSupersetView):
     """def panel2(self):"""
     """return self.render_template('superset/panel.html')"""
 
-    """@log_this"""
-    """@has_access"""
+    @log_this
+    @has_access
     @expose("/panel/explore/<datasource_type>/<datasource_id>/")
-    def panel(self, datasource_type, datasource_id):
+    def panel_explore(self, datasource_type, datasource_id):
         form_data = self.get_form_data()
-
+        logging.info("/panel/explore")
         datasource_id = int(datasource_id)
         viz_type = form_data.get("viz_type")
         slice_id = form_data.get('slice_id')
@@ -1082,8 +1082,8 @@ class Superset(BaseSupersetView):
             datasource_id=datasource_id,
             **request.args))
 
-    """@log_this"""
-    """@has_access"""
+    @log_this
+    @has_access
     @expose("/explore/<datasource_type>/<datasource_id>/")
     def explore(self, datasource_type, datasource_id):
         form_data = self.get_form_data()
@@ -1728,11 +1728,13 @@ class Superset(BaseSupersetView):
         session.commit()
         return json_success(json.dumps({'count': count}))
 
+    @log_this
     @has_access
     @expose("/panel/dashboard/<dashboard_id>/")
-    def dashboard(self, dashboard_id):
+    def panel_dashboard(self, dashboard_id):
         """Server side rendering for a dashboard"""
         session = db.session()
+        logging.info("/panel/dashboard")
         qry = session.query(models.Dashboard)
         if dashboard_id.isdigit():
             qry = qry.filter_by(id=int(dashboard_id))

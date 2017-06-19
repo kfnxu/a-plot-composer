@@ -1,11 +1,13 @@
 {% extends "superset/basic.html" %}
+
+{% block title %}[dashboard] {{ dashboard_title }}{% endblock %}
 {% block body %}
   {% include "superset/office.html" %}
-  <div
-    id="js-explore-view-container"
-    class="dashboard container-fluid"
-    data-bootstrap="{{ bootstrap_data }}"
-  ></div>
+<div
+  class="dashboard container-fluid"
+  data-bootstrap="{{ bootstrap_data }}"
+>
+</div>
   <div id="root" style="height: 100%"></div>
   <div id="ihme-office-log"></div>
 {% endblock %}
@@ -16,4 +18,3 @@
     {% include "superset/partials/_script_tag.html" %}
   {% endwith %}
 {% endblock %}
-
