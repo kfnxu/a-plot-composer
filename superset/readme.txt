@@ -1,6 +1,12 @@
+#############################################################################
+#############        url for tests                             ##############
+#############################################################################
+https://host-name/superset/panel/dashboard/4/#/chartboard
+
+
 
 #############################################################################
-#############        architecture of the supserset   ########################
+#############        architecture of the data-vis(supserset)   ##############
 #############################################################################
 architecture of the supserset
 -python/templates for the site layout
@@ -9,6 +15,38 @@ architecture of the supserset
 
 -javascript for dashboard charts
 -react-redux for slice chart
+
+path /superset/... map to following code base
+├── common.js
+├── components
+├── constants.js
+├── css-theme.js
+├── dashboard
+├── explore
+├── modules
+├── panel
+├── profile
+├── reduxUtils.js
+├── SqlLab
+├── syncBackend.js
+└── welcome.js
+
+superset/views/core.js do the flask-appbuilder 'path' to 'code-base' mapping
+    @log_this
+    @has_access
+    @expose("/explore/<datasource_type>/<datasource_id>/")
+
+    @expose("/welcome")
+    def welcome(self):
+        """Personalized welcome page"""
+        if not g.user or not g.user.get_id():
+            return redirect(appbuilder.get_url_for_login)
+        return self.render_template('superset/welcome.html', utils=utils)
+
+    @has_access
+    @expose("/profile/<username>/")
+    def profile(self, username):
+        """User profile page"""
 
 
 primary charts on site for slice and dashboard
@@ -164,7 +202,49 @@ superset/basic.html:        {% include "superset/partials/_script_tag.html" %}
 
 
 #############################################################################
+############# flask appbuilder routes defined        ########################
+#############################################################################
+all routes are defined in this file:
+views/core.py
+
+    @has_access_api
+    @expose("/datasources/")
+    def datasources(self):
+        datasources = ConnectorRegistry.get_all_datasources(db.session)
+        datasources = [(str(o.id) + '__' + o.type, repr(o)) for o in datasources]
+        return self.json_response(datasources)
+
+    @has_access_api
+    @expose("/override_role_permissions/", methods=['POST'])
+    def override_role_permissions(self):
+        """Updates the role with the give datasource permissions.
+
+          Permissions not in the request will be revoked. This endpoint should
+          be available to admins only. Expects JSON in the format:
+           {
+            'role_name': '{role_name}',
+            'database': [{
+                'datasource_type': '{table|druid}',
+                'name': '{database_name}',
+                'schema': [{
+                    'name': '{schema_name}',
+                    'datasources': ['{datasource name}, {datasource name}']
+                }]
+            }]
+        }
+        """
+
+https://host-name/users/list/
+https://host-name/roles/list/
+https://host-name/superset/profile/admin/
+https://host-name/superset/dashboard/4/
+https://host-name/slicemodelview/list/
+https://host-name/databaseview/edit/2
+https://host-name/superset/explore/table/2/?form_data=%7B%22y_axis_label%22%3A+%22%22%2C+%22series%22%3A+%22region%22%2C+%22entity%22%3A+%22country_name%22%2C+%22show_legend%22%3A+true%2C+%22filters%22%3A+%5B%7B%22col%22%3A+%22country_code%22%2C+%22val%22%3A+%5B%22TCA%22%2C+%22MNP%22%2C+%22DMA%22%2C+%22MHL%22%2C+%22MCO%22%2C+%22SXM%22%2C+%22CYM%22%2C+%22TUV%22%2C+%22IMY%22%2C+%22KNA%22%2C+%22ASM%22%2C+%22ADO%22%2C+%22AMA%22%2C+%22PLW%22%5D%2C+%22op%22%3A+%22not+in%22%7D%5D%2C+%22granularity_sqla%22%3A+%22year%22%2C+%22size%22%3A+%22sum__SP_POP_TOTL%22%2C+%22viz_type%22%3A+%22bubble%22%2C+%22since%22%3A+%222011-01-01%22%2C+%22x_axis_label%22%3A+%22%22%2C+%22until%22%3A+%222011-01-02%22%2C+%22slice_id%22%3A+82%2C+%22time_grain_sqla%22%3A+%22Time+Column%22%2C+%22y_log_scale%22%3A+false%2C+%22limit%22%3A+500%2C+%22datasource%22%3A+%222__table%22%2C+%22y%22%3A+%22sum__SP_DYN_LE00_IN%22%2C+%22x%22%3A+%22sum__SP_RUR_TOTL_ZS%22%2C+%22x_log_scale%22%3A+false%2C+%22where%22%3A+%22%22%2C+%22having%22%3A+%22%22%2C+%22max_bubble_size%22%3A+%2250%22%7D
+
+
+#############################################################################
 #############            data access example         ########################
 #############################################################################
 data access example: 
-https://localhost/superset/explore_json/table/2/?form_data=%7B%22datasource%22%3A%222__table%22%2C%22viz_type%22%3A%22bubble%22%2C%22slice_id%22%3A82%2C%22granularity_sqla%22%3A%22year%22%2C%22time_grain_sqla%22%3A%22Time+Column%22%2C%22since%22%3A%222011-01-01%22%2C%22until%22%3A%222011-01-02%22%2C%22series%22%3A%22region%22%2C%22entity%22%3A%22country_name%22%2C%22x%22%3A%22sum__SP_RUR_TOTL_ZS%22%2C%22y%22%3A%22sum__SP_DYN_LE00_IN%22%2C%22size%22%3A%22sum__SP_POP_TOTL%22%2C%22limit%22%3A500%2C%22show_legend%22%3Atrue%2C%22max_bubble_size%22%3A%2250%22%2C%22x_axis_label%22%3A%22%22%2C%22y_axis_label%22%3A%22%22%2C%22x_log_scale%22%3Afalse%2C%22y_log_scale%22%3Afalse%2C%22where%22%3A%22%22%2C%22having%22%3A%22%22%2C%22filters%22%3A%5B%7B%22col%22%3A%22country_code%22%2C%22val%22%3A%5B%22TCA%22%2C%22MNP%22%2C%22DMA%22%2C%22MHL%22%2C%22MCO%22%2C%22SXM%22%2C%22CYM%22%2C%22TUV%22%2C%22IMY%22%2C%22KNA%22%2C%22ASM%22%2C%22ADO%22%2C%22AMA%22%2C%22PLW%22%5D%2C%22op%22%3A%22not+in%22%7D%5D%7D
+https://host-name/superset/explore_json/table/2/?form_data=%7B%22datasource%22%3A%222__table%22%2C%22viz_type%22%3A%22bubble%22%2C%22slice_id%22%3A82%2C%22granularity_sqla%22%3A%22year%22%2C%22time_grain_sqla%22%3A%22Time+Column%22%2C%22since%22%3A%222011-01-01%22%2C%22until%22%3A%222011-01-02%22%2C%22series%22%3A%22region%22%2C%22entity%22%3A%22country_name%22%2C%22x%22%3A%22sum__SP_RUR_TOTL_ZS%22%2C%22y%22%3A%22sum__SP_DYN_LE00_IN%22%2C%22size%22%3A%22sum__SP_POP_TOTL%22%2C%22limit%22%3A500%2C%22show_legend%22%3Atrue%2C%22max_bubble_size%22%3A%2250%22%2C%22x_axis_label%22%3A%22%22%2C%22y_axis_label%22%3A%22%22%2C%22x_log_scale%22%3Afalse%2C%22y_log_scale%22%3Afalse%2C%22where%22%3A%22%22%2C%22having%22%3A%22%22%2C%22filters%22%3A%5B%7B%22col%22%3A%22country_code%22%2C%22val%22%3A%5B%22TCA%22%2C%22MNP%22%2C%22DMA%22%2C%22MHL%22%2C%22MCO%22%2C%22SXM%22%2C%22CYM%22%2C%22TUV%22%2C%22IMY%22%2C%22KNA%22%2C%22ASM%22%2C%22ADO%22%2C%22AMA%22%2C%22PLW%22%5D%2C%22op%22%3A%22not+in%22%7D%5D%7D
