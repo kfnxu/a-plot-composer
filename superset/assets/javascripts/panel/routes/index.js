@@ -14,6 +14,8 @@ import DatabindingRoute from './Databinding'
 import InputSetting from './InputSetting'
 import ChartboardRoute from './Chartboard'
 import ExploreboardRoute from './Chartboard/exploreboard'
+import WelcomeboardRoute from './Chartboard/welcomeboard'
+import SqllabboardRoute from './Chartboard/sqllabboard'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -36,6 +38,8 @@ export const createRoutes = (store) =>
       DataimportRoute(store),
       ChartboardRoute(store),
       ExploreboardRoute(store),
+      WelcomeboardRoute(store), 
+      SqllabboardRoute(store),
   ]
  }, 
  ]

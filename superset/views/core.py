@@ -2330,12 +2330,65 @@ class Superset(BaseSupersetView):
             error_msg=get_error_msg(),
         ), 500
 
+    @expose("/panel/welcome")
+    def panel_welcome(self):
+        """Personalized welcome page"""
+        if not g.user or not g.user.get_id():
+            return redirect(appbuilder.get_url_for_login)
+        return self.render_template('superset/panel.html', utils=utils)
+
     @expose("/welcome")
     def welcome(self):
         """Personalized welcome page"""
         if not g.user or not g.user.get_id():
             return redirect(appbuilder.get_url_for_login)
         return self.render_template('superset/welcome.html', utils=utils)
+
+    @has_access
+    @expose("/panel/profile/<username>/")
+    def panel_profile(self, username):
+        """User profile page"""
+        if not username and g.user:
+            username = g.user.username
+        user = (
+            db.session.query(ab_models.User)
+            .filter_by(username=username)
+            .one()
+        )
+        roles = {}
+        permissions = defaultdict(set)
+        for role in user.roles:
+            perms = set()
+            for perm in role.permissions:
+                perms.add(
+                    (perm.permission.name, perm.view_menu.name)
+                )
+                if perm.permission.name in ('datasource_access', 'database_access'):
+                    permissions[perm.permission.name].add(perm.view_menu.name)
+            roles[role.name] = [
+                [perm.permission.name, perm.view_menu.name]
+                for perm in role.permissions
+            ]
+
+        payload = {
+            'user': {
+                'username': user.username,
+                'firstName': user.first_name,
+                'lastName': user.last_name,
+                'userId': user.id,
+                'isActive': user.is_active(),
+                'createdOn': user.created_on.isoformat(),
+                'email': user.email,
+                'roles': roles,
+                'permissions': permissions,
+            }
+        }
+        return self.render_template(
+            'superset/panel.html',
+            title=user.username + "'s profile",
+            navbar_container=True,
+            bootstrap_data=json.dumps(payload, default=utils.json_iso_dttm_ser)
+        )
 
     @has_access
     @expose("/profile/<username>/")
@@ -2383,6 +2436,18 @@ class Superset(BaseSupersetView):
         )
 
     @has_access
+    @expose("/panel/sqllab")
+    def panel_sqllab(self):
+        """SQL Editor"""
+        d = {
+            'defaultDbId': config.get('SQLLAB_DEFAULT_DBID'),
+        }
+        return self.render_template(
+            'superset/panel.html',
+            bootstrap_data=json.dumps(d, default=utils.json_iso_dttm_ser)
+        )
+
+    @has_access
     @expose("/sqllab")
     def sqllab(self):
         """SQL Editor"""
@@ -2393,6 +2458,7 @@ class Superset(BaseSupersetView):
             'superset/sqllab.html',
             bootstrap_data=json.dumps(d, default=utils.json_iso_dttm_ser)
         )
+
 appbuilder.add_view_no_menu(Superset)
 
 
