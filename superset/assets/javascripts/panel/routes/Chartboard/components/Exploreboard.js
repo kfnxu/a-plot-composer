@@ -2,10 +2,9 @@ import React from 'react'
 
 import RaisedButton from 'material-ui/RaisedButton';
 import PropTypes from 'prop-types'
-//import ExploreViewPage from '../../../../explore/view';
-import DashboardViewPage from '../../../../dashboard/view';
+import ExploreboardViewPage from '../../../../explore/view';
 
-export const Chartboard = (props) => {
+export const Exploreboard = (props) => {
   const styles = {
     actionButton: {
       marginLeft: 5
@@ -15,17 +14,16 @@ export const Chartboard = (props) => {
   return (
 
   <div style={{ margin: '0 auto' }} >
-     {/*{<ExploreViewPage {...props} />}*/}
-     {<DashboardViewPage {...props} />}
+     {<ExploreboardViewPage {...props} />}
   </div>
 
  )
 }
 
-Chartboard.propTypes = {
-  chartboardDNode     : PropTypes.string.isRequired,
+Exploreboard.propTypes = {
+  exploreboardDNode     : PropTypes.string.isRequired,
   dataAsync : PropTypes.func.isRequired,
   insertChartToTarger   : PropTypes.func.isRequired
 }
 
-export default Chartboard
+export default Exploreboard

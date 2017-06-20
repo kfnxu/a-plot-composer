@@ -6,7 +6,7 @@ import { insertChartToTarger, dataAsync} from '../modules/chartboard'
     wiring in the actions and state necessary to render a presentational
     component */
 
-import Chartboard from '../components/Chartboard'
+import Exploreboard from '../components/Exploreboard'
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. */
@@ -17,7 +17,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  chartboardDNode : state.chartboardKey,
+  exploreboardDNode : state.exploreboardKey,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chartboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Exploreboard)
