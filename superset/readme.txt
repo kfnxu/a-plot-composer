@@ -3,8 +3,63 @@
 #############################################################################
 https://host-name/superset/panel/dashboard/4/#/chartboard
 https://host-name/superset/panel/explore/table/28/?form_data=%7B%22y_axis_label%22%3A%20%22%22%2C%20%22series%22%3A%20%22location_name%22%2C%20%22entity%22%3A%20%22region_name%22%2C%20%22show_legend%22%3A%20true%2C%20%22filters%22%3A%20%5B%5D%2C%20%22granularity_sqla%22%3A%20%22year%22%2C%20%22having%22%3A%20%22%22%2C%20%22size%22%3A%20%22sum__upper%22%2C%20%22slice_id%22%3A%20112%2C%20%22viz_type%22%3A%20%22bubble%22%2C%20%22where%22%3A%20%22%22%2C%20%22since%22%3A%20%22100%20years%20ago%22%2C%20%22x_axis_label%22%3A%20%22%22%2C%20%22y_log_scale%22%3A%20true%2C%20%22limit%22%3A%2050%2C%20%22datasource%22%3A%20%2228__table%22%2C%20%22y%22%3A%20%22sum__mean%22%2C%20%22x%22%3A%20%22sum__lower%22%2C%20%22x_log_scale%22%3A%20true%2C%20%22time_grain_sqla%22%3A%20%22Time%20Column%22%2C%20%22until%22%3A%20%22now%22%2C%20%22max_bubble_size%22%3A%20%2225%22%7D#/exploreboard
+https://host-name/superset/panel/sqllab#/sqllabboard
+https://host-name/superset/panel/welcome#/welcomeboar
 
 
+#############################################################################
+#############        flask appbuilder api access               ##############
+#############################################################################
+every class can be access from api:
+https://host-name/slicemodelview/api/read
+
+return sample: 
+{
+  "count": 43, 
+  "label_columns": {
+    "cache_timeout": "Cache Timeout", 
+    "changed_by": "Changed By", 
+    "changed_by_fk": "Changed By Fk", 
+    "changed_on": "Changed On", 
+    "created_by": "Created By", 
+    "created_by_fk": "Created By Fk", 
+    "created_on": "Created On", 
+    "creator": "Creator", 
+    "dashboards": "Dashboards", 
+    "datasource_id": "Datasource Id", 
+    "datasource_link": "Datasource", 
+    "datasource_name": "Datasource Name", 
+    "datasource_type": "Datasource Type", 
+    "description": "Description", 
+    "id": "Id", 
+    "modified": "Last Modified", 
+    "owners": "Owners", 
+    "params": "Parameters", 
+    "perm": "Perm", 
+    "slice_link": "Slice", 
+    "slice_name": "Name", 
+    "table": "Table", 
+    "viz_type": "Visualization Type"
+  }, 
+  "list_columns": [
+    "slice_link", 
+    "viz_type", 
+    "datasource_link", 
+    "creator", 
+    "modified"
+  ], 
+  "modelview_name": "SliceModelView", 
+  "order_columns": [
+    "slice_link", 
+    "viz_type", 
+    "datasource_link", 
+    "creator", 
+    "modified"
+  ], 
+  "page": null, 
+  "page_size": null, 
+  "pks": [
+    37, 
 
 #############################################################################
 #############        architecture of the data-vis(supserset)   ##############
