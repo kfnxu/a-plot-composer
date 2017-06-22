@@ -11,7 +11,7 @@ import Divider from 'material-ui/Divider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import PageBase from '../components/PageBase';
-import Data from '../data';
+//import Data from '../data';
 
 const BindingPage = () => {
 
