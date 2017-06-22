@@ -375,15 +375,3 @@ export default class DashboardViewPage extends React.Component{
   }
 }
 
-/*
-$(document).ready(() => {
-  // Getting bootstrapped data from the DOM
-  utils.initJQueryAjax();
-  const dashboardData = $('.dashboard').data('bootstrap');
-
-  const state = getInitialState(dashboardData);
-  const dashboard = dashboardContainer(state.dashboard, state.datasources, state.user_id);
-  initDashboardView(dashboard);
-  dashboard.init();
-});
-*/

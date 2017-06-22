@@ -28,7 +28,7 @@ function modelViewTable(selector, modelView, orderCol, order) {
     const cols = $.map(columns, function (col) {
       return { sTitle: data.label_columns[col] };
     });
-    const panel = $(selector).parents('.panel');
+    const panel = $(selector).parents('#root');
     panel.find('img.loading').remove();
     $(selector).DataTable({
       aaData: tableData,

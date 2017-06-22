@@ -1,4 +1,13 @@
 {% extends "superset/basic.html" %}
+<script type="text/javascript">
+
+var can_add = {{ "true" if "can_add" | is_item_visible(modelview_name) else "false" }};
+var can_show = {{ "true" if "can_show" | is_item_visible(modelview_name) else "false" }};
+var can_edit = {{ "true" if "can_edit" | is_item_visible(modelview_name) else "false" }};
+var can_delete = {{ "true" if "can_delete" | is_item_visible(modelview_name) else "false" }};
+var actions = {{ actions | get_actions_on_list(modelview_name) }};
+</script>
+
 {% block body %}
   <div
     id="js-explore-view-container"

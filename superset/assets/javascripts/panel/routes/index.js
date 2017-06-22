@@ -16,6 +16,7 @@ import ChartboardRoute from './Chartboard'
 import ExploreboardRoute from './Chartboard/exploreboard'
 import WelcomeboardRoute from './Chartboard/welcomeboard'
 import SqllabboardRoute from './Chartboard/sqllabboard'
+import ListboardRoute from './Chartboard/listboard'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -25,8 +26,7 @@ export const createRoutes = (store) =>
  [{
   path        : '/',
   component   : CoreLayout,
-  //indexRoute  : { component: ControlPanelSettingPage },
-  indexRoute : InputSetting(store),
+  indexRoute : ChartboardRoute(store), 
   childRoutes : [
       //{
       //   path :"binding",
@@ -40,6 +40,7 @@ export const createRoutes = (store) =>
       ExploreboardRoute(store),
       WelcomeboardRoute(store), 
       SqllabboardRoute(store),
+      ListboardRoute(store),
   ]
  }, 
  ]

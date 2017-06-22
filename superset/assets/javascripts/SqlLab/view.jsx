@@ -14,19 +14,6 @@ import './main.css';
 import './reactable-pagination.css';
 import '../components/FilterableTable/FilterableTableStyles.css';
 
-appSetup();
-initJQueryAjax();
-
-const appContainer = document.getElementById('js-explore-view-container');
-const bootstrapData = JSON.parse(appContainer.getAttribute('data-bootstrap'));
-const state = Object.assign({}, getInitialState(bootstrapData.defaultDbId), bootstrapData);
-
-const store = createStore(
-  sqlLabReducer, state, compose(applyMiddleware(thunkMiddleware), initEnhancer()));
-
-// jquery hack to highlight the navbar menu
-$('a:contains("SQL Lab")').parent().addClass('active');
-
 export default class SqllabViewPage extends React.Component{
 
   constructor(props) {
@@ -40,6 +27,17 @@ export default class SqllabViewPage extends React.Component{
   }
 
   render() {
+   appSetup();
+   initJQueryAjax();
+   const appContainer = document.getElementById('js-explore-view-container');
+   const bootstrapData = JSON.parse(appContainer.getAttribute('data-bootstrap'));
+   const state = Object.assign({}, getInitialState(bootstrapData.defaultDbId), bootstrapData);
+   // jquery hack to highlight the navbar menu
+   $('a:contains("SQL Lab")').parent().addClass('active');
+
+   const store = createStore(
+     sqlLabReducer, state, compose(applyMiddleware(thunkMiddleware), initEnhancer()));
+
      return (
        <Provider store={store}>
         <App />

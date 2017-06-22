@@ -6,13 +6,18 @@ import d3 from 'd3';
 
 import '../stylesheets/welcome.css';
 import { appSetup } from './common';
-
-appSetup();
 require('datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css');
 
-dt(window, $);
+export default class WelcomeViewPage extends React.Component{
 
-function modelViewTable(selector, modelView, orderCol, order) {
+  constructor(props) {
+    super(props);
+    appSetup();
+    dt(window, $);
+  }
+
+  modelViewTable(selector, modelView, orderCol, order) {
+
   // Builds a dataTable from a flask appbuilder api endpoint
   let url = '/' + modelView.toLowerCase() + '/api/read';
   url += '?_oc_' + modelView + '=' + orderCol;
@@ -29,8 +34,10 @@ function modelViewTable(selector, modelView, orderCol, order) {
     const cols = $.map(columns, function (col) {
       return { sTitle: data.label_columns[col] };
     });
-    const panel = $(selector).parents('.panel');
-    panel.find('img.loading').remove();
+    //const panel = $(selector).parents('.panel');
+    //panel.find('img.loading').remove();
+    $("img[src$='loading.gif']").remove();
+    console.log("welcome getJSON", data);
     $(selector).DataTable({
       aaData: tableData,
       aoColumns: cols,
@@ -54,19 +61,13 @@ function modelViewTable(selector, modelView, orderCol, order) {
     $(selector).slideDown();
     $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
   });
-}
-
-export default class WelcomeViewPage extends React.Component{
-
-  constructor(props) {
-    super(props);
   }
 
   componentWillMount() {
   }
 
   componentDidMount() {
-     modelViewTable('#welcome_node', 'DashboardModelViewAsync', 'changed_on', 'desc');
+     this.modelViewTable('#welcome_node', 'DashboardModelViewAsync', 'changed_on', 'desc');
   }
 
   render() {

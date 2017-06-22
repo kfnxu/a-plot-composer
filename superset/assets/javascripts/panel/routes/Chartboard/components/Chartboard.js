@@ -1,10 +1,53 @@
 import React from 'react'
 
 import RaisedButton from 'material-ui/RaisedButton';
+import PageBase from '../../../components/PageBase';
 import PropTypes from 'prop-types'
-//import ExploreViewPage from '../../../../explore/view';
-import DashboardViewPage from '../../../../dashboard/view';
 
+import DashboardViewPage    from '../../../../dashboard/view';
+import ExploreboardViewPage from '../../../../explore/view';
+import SqllabboardViewPage  from '../../../../SqlLab/view';
+
+import ListboardViewPage    from '../../../../list';
+import WelcomeboardViewPage from '../../../../welcome.view';
+
+export default class Chartboard extends React.Component {
+  constructor (props) {
+    super(props)
+    this.getViewComponent = this.getViewComponent.bind(this)
+  }
+
+  getViewComponent () {
+    var path = (((window.location.pathname).split('/')).slice(1,4)).join('/');
+    console.log('chartboard url path', path, window.location)
+    switch (path) {
+      case 'superset/panel/dashboard':
+        return <DashboardViewPage {...this.props} />
+
+      case 'superset/panel/explore':
+        return <ExploreboardViewPage {...this.props} />
+
+      case 'superset/panel/sqllab':
+        return <SqllabboardViewPage {...this.props} />
+
+      case 'slicemodelview/list/':
+        return <ListboardViewPage  {...this.props} />
+
+      default:
+        return <WelcomeboardViewPage  {...this.props} /> 
+    }
+  }
+
+  render () {
+    return (
+      <PageBase>
+        { this.getViewComponent() }
+      </PageBase>
+    )
+  }
+}
+
+/*
 export const Chartboard = (props) => {
   const styles = {
     actionButton: {
@@ -12,12 +55,13 @@ export const Chartboard = (props) => {
     }
   }
 
+  console.log('url', props.location, props.location.pathname);
   return (
-
+  <PageBase>
   <div style={{ margin: '0 auto' }} >
-     {/*{<ExploreViewPage {...props} />}*/}
      {<DashboardViewPage {...props} />}
   </div>
+  </PageBase>
 
  )
 }
@@ -29,3 +73,4 @@ Chartboard.propTypes = {
 }
 
 export default Chartboard
+*/

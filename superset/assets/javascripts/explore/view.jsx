@@ -15,19 +15,32 @@ import { exploreReducer } from './reducers/exploreReducer';
 import { appSetup } from '../common';
 import './main.css';
 
-appSetup();
-initJQueryAjax();
 
-const exploreViewContainer = document.getElementById('js-explore-view-container');
-const bootstrapData = JSON.parse(exploreViewContainer.getAttribute('data-bootstrap'));
-const controls = getControlsState(bootstrapData, bootstrapData.form_data);
-delete bootstrapData.form_data;
+export default class ExploreViewPage extends React.Component{
 
-console.log('javascripts/explore/index.jsx', bootstrapData);
+  constructor(props) {
+    super(props);
+    appSetup();
+    initJQueryAjax();
+  }
 
-// Initial state
-const bootstrappedState = Object.assign(
-  bootstrapData, {
+  componentWillMount() {
+  }
+
+  componentDidMount() {
+  }
+
+  render() {
+
+    const exploreViewContainer = document.getElementById('js-explore-view-container');
+    const bootstrapData = JSON.parse(exploreViewContainer.getAttribute('data-bootstrap'));
+    console.log('javascripts/explore/index.jsx', bootstrapData);
+    const controls = getControlsState(bootstrapData, bootstrapData.form_data);
+    delete bootstrapData.form_data;
+
+    // Initial state
+    const bootstrappedState = Object.assign(
+    bootstrapData, {
     chartStatus: null,
     chartUpdateEndTime: null,
     chartUpdateStartTime: now(),
@@ -41,26 +54,14 @@ const bootstrappedState = Object.assign(
     triggerQuery: true,
     triggerRender: false,
     alert: null,
-  },
-);
+    },
+    );
 
-const store = createStore(exploreReducer, bootstrappedState,
-  compose(applyMiddleware(thunk), initEnhancer(false)),
-);
+    const store = createStore(exploreReducer, bootstrappedState,
+      compose(applyMiddleware(thunk), initEnhancer(false)),
+    );
 
-export default class ExploreViewPage extends React.Component{
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentWillMount() {
-  }
-
-  componentDidMount() {
-  }
-
-  render() {
      return (
      <Provider store={store}>
        <div>
@@ -73,14 +74,3 @@ export default class ExploreViewPage extends React.Component{
 }
 
 
-/*
-ReactDOM.render(
-  <Provider store={store}>
-    <div>
-      <ExploreViewContainer />
-      <AlertsWrapper />
-    </div>
-  </Provider>,
-  exploreViewContainer,
-);
-*/

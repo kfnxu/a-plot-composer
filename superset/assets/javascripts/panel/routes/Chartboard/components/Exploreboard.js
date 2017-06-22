@@ -1,6 +1,7 @@
 import React from 'react'
 
 import RaisedButton from 'material-ui/RaisedButton';
+import PageBase from '../../../components/PageBase';
 import PropTypes from 'prop-types'
 import ExploreboardViewPage from '../../../../explore/view';
 
@@ -12,10 +13,11 @@ export const Exploreboard = (props) => {
   }
 
   return (
-
+  <PageBase>
   <div style={{ margin: '0 auto' }} >
      {<ExploreboardViewPage {...props} />}
   </div>
+  </PageBase>
 
  )
 }

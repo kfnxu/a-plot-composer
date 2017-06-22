@@ -378,6 +378,7 @@ class SliceModelView(SupersetModelView, DeleteMixin):  # noqa
             "from the `Slices` menu"), "info")
         return redirect('/superset/welcome')
 
+
 appbuilder.add_view(
     SliceModelView,
     "Slices",
@@ -453,6 +454,7 @@ class DashboardModelView(SupersetModelView, DeleteMixin):  # noqa
         'json_metadata': _("JSON Metadata"),
         'table_names': _("Underlying Tables"),
     }
+
 
     def pre_add(self, obj):
         obj.slug = obj.slug.strip() or None

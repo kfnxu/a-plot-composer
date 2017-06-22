@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import LeftDrawer from '../../components/LeftDrawer';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import ThemeDefault from '../../theme-default';
-import Data from '../../data';
+import Data from '../../menu';
 
 class App extends React.Component {
 
