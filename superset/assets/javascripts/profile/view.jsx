@@ -7,17 +7,12 @@ import { appSetup } from '../common';
 
 import './main.css';
 
-appSetup();
-
-const profileViewContainer = document.getElementById('app');
-//const profileViewContainer = document.getElementById('js-explore-view-container');
-
-const bootstrap = JSON.parse(profileViewContainer.getAttribute('data-bootstrap'));
 
 export default class ProfileViewPage extends React.Component{
 
   constructor(props) {
     super(props);
+    appSetup();
   }
 
   componentWillMount() {
@@ -27,6 +22,11 @@ export default class ProfileViewPage extends React.Component{
   }
 
   render() {
+     //const profileViewContainer = document.getElementById('app');
+     const profileViewContainer = document.getElementById('js-explore-view-container');
+     const bootstrap = JSON.parse(profileViewContainer.getAttribute('data-bootstrap'));
+     const user = bootstrap.user;
+
      return (
        <App user={user} />
      );

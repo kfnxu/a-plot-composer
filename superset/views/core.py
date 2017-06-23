@@ -1158,7 +1158,8 @@ class Superset(BaseSupersetView):
             if datasource_type == 'table' \
             else datasource.datasource_name
         return self.render_template(
-            "superset/explore.html",
+            #"superset/explore.html",
+            "superset/panel.html",
             bootstrap_data=json.dumps(bootstrap_data),
             slice=slc,
             standalone_mode=standalone,
@@ -1839,7 +1840,8 @@ class Superset(BaseSupersetView):
         }
 
         return self.render_template(
-            "superset/dashboard.html",
+            #"superset/dashboard.html",
+            "superset/panel.html",
             dashboard_title=dash.dashboard_title,
             bootstrap_data=json.dumps(bootstrap_data),
         )
@@ -2344,7 +2346,8 @@ class Superset(BaseSupersetView):
         """Personalized welcome page"""
         if not g.user or not g.user.get_id():
             return redirect(appbuilder.get_url_for_login)
-        return self.render_template('superset/welcome.html', utils=utils)
+        #return self.render_template('superset/welcome.html', utils=utils)
+        return self.render_template('superset/panel.html', utils=utils)
 
     @has_access
     @expose("/panel/profile/<username>/")
@@ -2431,7 +2434,8 @@ class Superset(BaseSupersetView):
             }
         }
         return self.render_template(
-            'superset/profile.html',
+            #'superset/profile.html',
+            'superset/panel.html',
             title=user.username + "'s profile",
             navbar_container=True,
             bootstrap_data=json.dumps(payload, default=utils.json_iso_dttm_ser)
@@ -2457,7 +2461,8 @@ class Superset(BaseSupersetView):
             'defaultDbId': config.get('SQLLAB_DEFAULT_DBID'),
         }
         return self.render_template(
-            'superset/sqllab.html',
+            #'superset/sqllab.html',
+            'superset/panel.html',
             bootstrap_data=json.dumps(d, default=utils.json_iso_dttm_ser)
         )
 
