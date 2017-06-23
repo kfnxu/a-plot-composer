@@ -16,6 +16,7 @@ class App extends React.PureComponent {
     super(props);
     this.state = {
       hash: window.location.hash,
+      action: window.location.search,
       contentHeight: '0px',
     };
   }
@@ -50,7 +51,8 @@ class App extends React.PureComponent {
   }
   render() {
     let content;
-    if (this.state.hash) {
+    //if (this.state.hash) {
+    if (this.state.action && this.state.action == '?list' ) {
       content = (
         <div className="container-fluid">
           <div className="row">

@@ -2450,6 +2450,7 @@ class Superset(BaseSupersetView):
         }
         return self.render_template(
             'superset/panel.html',
+            #'superset/sqllab.html',
             bootstrap_data=json.dumps(d, default=utils.json_iso_dttm_ser)
         )
 
