@@ -1,6 +1,10 @@
 #############################################################################
 #############        url for tests                             ##############
 #############################################################################
+sql-edit: https://host-name/superset/sqllab?id=13#/
+sql-list: https://host-name/superset/sqllab?list#/
+dashboard: https://host-name/superset/welcome
+slices-list: https://host-name/slicemodelview/list/#/
 https://host-name/superset/panel/dashboard/4/#/chartboard
 https://host-name/superset/panel/explore/table/28/?form_data=%7B%22y_axis_label%22%3A%20%22%22%2C%20%22series%22%3A%20%22location_name%22%2C%20%22entity%22%3A%20%22region_name%22%2C%20%22show_legend%22%3A%20true%2C%20%22filters%22%3A%20%5B%5D%2C%20%22granularity_sqla%22%3A%20%22year%22%2C%20%22having%22%3A%20%22%22%2C%20%22size%22%3A%20%22sum__upper%22%2C%20%22slice_id%22%3A%20112%2C%20%22viz_type%22%3A%20%22bubble%22%2C%20%22where%22%3A%20%22%22%2C%20%22since%22%3A%20%22100%20years%20ago%22%2C%20%22x_axis_label%22%3A%20%22%22%2C%20%22y_log_scale%22%3A%20true%2C%20%22limit%22%3A%2050%2C%20%22datasource%22%3A%20%2228__table%22%2C%20%22y%22%3A%20%22sum__mean%22%2C%20%22x%22%3A%20%22sum__lower%22%2C%20%22x_log_scale%22%3A%20true%2C%20%22time_grain_sqla%22%3A%20%22Time%20Column%22%2C%20%22until%22%3A%20%22now%22%2C%20%22max_bubble_size%22%3A%20%2225%22%7D#/exploreboard
 https://host-name/superset/panel/sqllab#/sqllabboard
