@@ -13,7 +13,6 @@ const data = {
     { text: 'Dashboard', icon: <GridOn/>, link: '/superset/panel/welcome' },
     { text: 'Templates', icon: <Web/>, link: '/slicemodelview/list' },
     { text: 'Datasource', icon: <Web/>, link: '/superset/sqllab?list' },
-    { text: 'Profile', icon: <Web/>, link: '/superset/profile/' },
     { text: 'App Setting', icon: <Web/>, link: '/#/setting' },
     { text: 'Data Import', icon: <GridOn/>, link: '/#/dataimport' },
     { text: 'Chart', icon: <Assessment/>, link: '/#/chartboard' },

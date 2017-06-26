@@ -66,6 +66,14 @@ const LeftDrawer = (props) => {
               href={menu.link}
             />
           )}
+            <MenuItem
+              onTouchTap={handleChangeRequestNavDrawer}
+              key={11}
+              style={styles.menuItem}
+              primaryText="Profile"
+              leftIcon={<Web/>}
+              href="/superset/profile/"
+            />
         </div>
         <div>
           {/*{props.menus.map((menu, index) =>
