@@ -73,7 +73,7 @@ const LeftDrawer = (props) => {
               style={styles.menuItem}
               primaryText="Profile"
               leftIcon={<SocialPerson/>}
-              href="/superset/profile/"
+              href={"/superset/profile/" + document.getElementById("csrf_u").value}
             />
         </div>
         <div>
