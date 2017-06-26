@@ -28,6 +28,11 @@
       id="csrf_token"
       value="{{ csrf_token() if csrf_token else '' }}"
     >
+    <input
+      name="csrf_u"
+      id="csrf_u"
+      value="{{ current_user.username }}"
+    >
   </head>
 
   <body>
