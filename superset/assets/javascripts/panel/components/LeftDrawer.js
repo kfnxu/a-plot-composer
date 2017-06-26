@@ -1,5 +1,6 @@
 import React,  { PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
+import SocialPerson from 'material-ui/svg-icons/social/person'; 
 import {spacing, typography} from 'material-ui/styles';
 import {white, blue600} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
@@ -71,7 +72,7 @@ const LeftDrawer = (props) => {
               key={11}
               style={styles.menuItem}
               primaryText="Profile"
-              leftIcon={<Web/>}
+              leftIcon={<SocialPerson/>}
               href="/superset/profile/"
             />
         </div>
