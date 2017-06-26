@@ -63,21 +63,19 @@ const LeftDrawer = (props) => {
               style={styles.menuItem}
               primaryText={menu.text}
               leftIcon={menu.icon}
-              href={menu.link}
+              containerElement={menu.link}
             />
           )}
         </div>
         <div>
-          {/*{props.menus.map((menu, index) =>
-            <MenuItem
+           {/*<MenuItem
               onTouchTap={handleChangeRequestNavDrawer}
               key={index}
               style={styles.menuItem}
               primaryText={menu.text}
               leftIcon={menu.icon}
               containerElement={<Link to={menu.link}/>}
-            />
-          )}*/}
+            />*/}
         </div>
     </Drawer>
   );
