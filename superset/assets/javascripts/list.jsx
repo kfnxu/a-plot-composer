@@ -19,40 +19,6 @@ export default class ListViewPage extends React.Component{
     appSetup();
   }
 
-  updateTHead(labels, listColumns) {
-    var body = $('#thead');
-    body.empty();
-    var row = $('<tr />');
-
-    for (var key in listColumns) {
-        var column = listColumns[key];
-        var col = $('<th />');
-        col.append(labels[column]);
-        row.append(col);
-    }
-    var el = row.appendTo(body);
-  }
-
-  updateTBody(listColumns, data) {
-    var body = $('#tbody');
-    body.empty();
-    for (var key in data) {
-        var obj = data[key];
-        var row = $('<tr />');
-        for (var key in listColumns) {
-            var column = listColumns[key];
-            var col = $('<td />');
-            col.append(obj[column]);
-            row.append(col);
-        }
-        var el = row.appendTo(body);
-    }
-  }
-
-  updateTable(labels, listColumns, data) {
-    this.updateTHead(labels, listColumns);
-    this.updateTBody(listColumns, data);
-  }
 
   getData(filters) {
     var self = this;
@@ -145,47 +111,4 @@ export default class ListViewPage extends React.Component{
   }
 }
 
-/*
-
-var CommentList = React.createClass({
-  componentWillMount: function () {
-    $.get('comments.json').done(function (json) {
-      this.setState({comments: json});
-    }.bind(this));
-  },
-  render: function() {
-    var commentNodes = this.state.comments.map(function (comment) {
-      return (
-        <Comment author={comment.author}>
-          {comment.text}
-        </Comment>
-      );
-    });
-    return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
-    );
-  }
-});
-
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn style={styles.columns.id}>index</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {Data.api.items.map( function(item, index) {
-                return (
-                <TableRow key={index}>
-                <TableRowColumn style={styles.columns.id}>{index}</TableRowColumn>
-                </TableRow>
-                )
-             }
-            )}
-          </TableBody>
-        </Table>
-
-*/
  
