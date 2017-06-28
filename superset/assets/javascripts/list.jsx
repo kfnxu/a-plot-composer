@@ -8,7 +8,6 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-
 import { appSetup } from './common';
 
 export default class ListViewPage extends React.Component{
@@ -22,11 +21,12 @@ export default class ListViewPage extends React.Component{
 
   getData(filters) {
     var self = this;
+    var view = 'slicemodelview';
     if (filters == "" || filters == null ) {
-        var base_url = "/slicemodelview/api/read";
+        var base_url = "/" + view.toLowerCase() + "/api/read";
     }
     else {
-        var base_url = "/slicemodelview/api/read?_flt_0_name=" + filters;
+        var base_url = "/" +  view.toLowerCase() +  "/api/read?_flt_0_name=" + filters;
     }
 
     $.ajax({
@@ -48,6 +48,12 @@ export default class ListViewPage extends React.Component{
   }
 
   componentDidMount() {
+  }
+
+  getPreviousPage() {
+  }
+
+  getNextPage() {
   }
 
   render() {
@@ -75,7 +81,7 @@ export default class ListViewPage extends React.Component{
                 <TableRow key={index}> 
                 {self.state.data.list_columns.map(function (column, index) {
                     var i = item[column];
-                    var s = jQuery(i).text(); 
+                    var s = jQuery(jQuery.parseHTML(i)).text(); 
                     var a = (   (i).match(/href="([^"]*)/) 
                              && (i).match(/href="([^"]*)/)[1] !== undefined ) ? 
                              (i).match(/href="([^"]*)/)[1] : "" ;

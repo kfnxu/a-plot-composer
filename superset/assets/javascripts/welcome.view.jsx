@@ -1,99 +1,120 @@
-/* eslint no-unused-vars: 0 */
 import React from 'react';
-import 'datatables.net';
-import dt from 'datatables.net-bs';
-import d3 from 'd3';
-
-import '../stylesheets/welcome.css';
+import RaisedButton from 'material-ui/RaisedButton';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import { appSetup } from './common';
-require('datatables-bootstrap3-plugin/media/css/datatables-bootstrap3.css');
 
 export default class WelcomeViewPage extends React.Component{
 
   constructor(props) {
     super(props);
+    this.state = { data: null };
     appSetup();
-    dt(window, $);
   }
 
-  modelViewTable(selector, modelView, orderCol, order) {
 
-  // Builds a dataTable from a flask appbuilder api endpoint
-  let url = '/' + modelView.toLowerCase() + '/api/read';
-  url += '?_oc_' + modelView + '=' + orderCol;
-  url += '&_od_' + modelView + '=' + order;
-  console.log('welcome.js modelViewTable url', url);
-  $.getJSON(url, function (data) {
-    const columns = ['dashboard_link', 'creator', 'modified'];
-    const tableData = $.map(data.result, function (el) {
-      const row = $.map(columns, function (col) {
-        return el[col];
+  getData(filters) {
+    var self = this;
+    var view = 'DashboardModelViewAsync';
+    if (filters == "" || filters == null ) {
+        var base_url = "/" + view.toLowerCase() + "/api/read";
+    }
+    else {
+        var base_url = "/" + view.toLowerCase() +  "/api/read?_flt_0_name=" + filters;
+    }
+
+    $.ajax({
+      type: "GET",
+      url: base_url
+    })
+      .done(function( result ) {
+        self.setState({data: result});
+        //self.updateTable(result.label_columns, result.list_columns, result.result);
       });
-      return [row];
-    });
-    const cols = $.map(columns, function (col) {
-      return { sTitle: data.label_columns[col] };
-    });
-    //const panel = $(selector).parents('.panel');
-    //panel.find('img.loading').remove();
-    $("img[src$='loading.gif']").remove();
-    console.log("welcome getJSON", data);
-    $(selector).DataTable({
-      aaData: tableData,
-      aoColumns: cols,
-      bPaginate: true,
-      pageLength: 10,
-      bLengthChange: false,
-      aaSorting: [],
-      searching: true,
-      bInfo: false,
-    });
-    // Hack to move the searchbox in the right spot
-    const search = panel.find('.dataTables_filter input');
-    search.addClass('form-control').detach();
-    search.appendTo(panel.find('.search'));
-    panel.find('.dataTables_filter').remove();
-    // Hack to display the page navigator properly
-    panel.find('.col-sm-5').remove();
-    const nav = panel.find('.col-sm-7');
-    nav.removeClass('col-sm-7');
-    nav.addClass('col-sm-12');
-    $(selector).slideDown();
-    $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
-  });
   }
 
   componentWillMount() {
+    this.getData();
+    var self = this;
+    $('.filter_val').keyup(function(e) {
+        self.getData($(this).val());
+    });
   }
 
   componentDidMount() {
-     this.modelViewTable('#welcome_node', 'DashboardModelViewAsync', 'changed_on', 'desc');
+  }
+
+  getPreviousPage() {
+  }
+
+  getNextPage() {
   }
 
   render() {
-     return (
-     <div class="container welcome">
-     <div class="panel panel-default">
-     <div class="panel-heading">
-      <div class="panel-title">
-        <div class="row">
-          <div class="col-md-6">
-          </div>
-          <div class="col-md-6">
-            <div class="search-container pull-right">
-              <i class="fa fa-search"></i>
-              <span class="search"></span>
-            </div>
-          </div>
-        </div>
+    var self = this;
+    var tableNode = function(){
+        if( !self.state.data ) 
+            return ( <div></div> )
+        
+        return (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {self.state.data.list_columns.map(function (column, index) {
+                return (
+                <TableHeaderColumn>{self.state.data.label_columns[column]}</TableHeaderColumn>
+                )
+             }
+            )}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {self.state.data.result.map(function (item, index) {
+  
+              return (
+                <TableRow key={index}> 
+                {self.state.data.list_columns.map(function (column, index) {
+                    var i = item[column];
+                    var s = jQuery(jQuery.parseHTML(i)).text(); 
+                    var a = (   (i).match(/href="([^"]*)/) 
+                             && (i).match(/href="([^"]*)/)[1] !== undefined ) ? 
+                             (i).match(/href="([^"]*)/)[1] : "" ;
+                    
+                    console.log('list.jsx item[column]', i, s, a );
+                    if ( a && a.length > 0 )
+                      return (
+                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} />{s}</TableRowColumn>
+                      )
+                    else 
+                      return (
+                        <TableRowColumn >{s}</TableRowColumn>
+                      )
+                  })
+                 } 
+                </TableRow>
+              )
+            })
+            }
+          </TableBody>
+        </Table>
+        )
+       }
+
+    return(
+      <div>
+      <input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />
+      <div class="table-responsive">
+      {tableNode()}
       </div>
       </div>
-      <div class="panel-body">
-      <img class="loading" src="/static/assets/images/loading.gif"/>
-      <table id="welcome_node" class="table" width="100%"></table>
-      </div>
-      </div>
-      </div>
-      );
+     );
   }
 }
+
+ 

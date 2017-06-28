@@ -10,7 +10,7 @@ import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 const data = {
   menus: [
-    { text: 'Dashboard', icon: <GridOn/>, link: '/superset/panel/welcome' },
+    { text: 'Dashboard', icon: <GridOn/>, link: '/dashboardmodelview/list/' },
     { text: 'Templates', icon: <Web/>, link: '/slicemodelview/list' },
     { text: 'Datasource', icon: <Web/>, link: '/superset/sqllab?list' },
     { text: 'App Setting', icon: <Web/>, link: '/#/setting' },
