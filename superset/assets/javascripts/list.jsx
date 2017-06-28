@@ -89,7 +89,7 @@ export default class ListViewPage extends React.Component{
                     console.log('list.jsx item[column]', i, s, a );
                     if ( a && a.length > 0 )
                       return (
-                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} />{s}</TableRowColumn>
+                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} /> {s}</TableRowColumn>
                       )
                     else 
                       return (

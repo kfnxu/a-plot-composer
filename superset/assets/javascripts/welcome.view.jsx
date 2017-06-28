@@ -89,7 +89,7 @@ export default class WelcomeViewPage extends React.Component{
                     console.log('list.jsx item[column]', i, s, a );
                     if ( a && a.length > 0 )
                       return (
-                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} />{s}</TableRowColumn>
+                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} /> {s}</TableRowColumn>
                       )
                     else 
                       return (
@@ -108,6 +108,7 @@ export default class WelcomeViewPage extends React.Component{
 
     return(
       <div>
+      <RaisedButton label="add" primary={true} linkButton={true} href="/dashboardmodelviewasync/add" />
       <input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />
       <div class="table-responsive">
       {tableNode()}
