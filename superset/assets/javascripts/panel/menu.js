@@ -12,10 +12,13 @@ const data = {
   menus: [
     { text: 'Dashboard', icon: <GridOn/>, link: '/dashboardmodelview/list/' },
     { text: 'Templates', icon: <Web/>, link: '/slicemodelview/list' },
-    { text: 'Datasource', icon: <Web/>, link: '/superset/sqllab?list' },
+    { text: 'Sql Lab', icon: <Web/>, link: '/superset/sqllab?list' },
+    { text: 'Databases', icon: <Web/>, link: '/databaseview/list' },
+
     { text: 'App Setting', icon: <Web/>, link: '/#/setting' },
     { text: 'Data Import', icon: <GridOn/>, link: '/#/dataimport' },
     { text: 'Chart', icon: <Assessment/>, link: '/#/chartboard' },
+    { text: 'Users', icon: <GridOn/>, link: '/users/lists/' },
 
   ],
 

@@ -47,14 +47,17 @@ class GridLayout extends React.Component {
   }
 
   onResizeStop(layout, oldItem, newItem) {
+    console.log('javascripts/dashboard/components/GridLayout.jsx onResizeStop', this.props, this.props.dashboard, layout, oldItem, newItem);
     const newSlice = this.props.dashboard.getSlice(newItem.i);
     if (oldItem.w !== newItem.w || oldItem.h !== newItem.h) {
       this.setState({ layout }, () => newSlice.resize());
     }
+    // cause error: _registerComponent(...): Target container is not a DOM element.
     this.props.dashboard.onChange();
   }
 
   onDragStop(layout) {
+    console.log('javascripts/dashboard/components/GridLayout.jsx onDragstop', layout);
     this.setState({ layout });
     this.props.dashboard.onChange();
   }

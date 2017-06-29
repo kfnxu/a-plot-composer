@@ -193,7 +193,7 @@ class SupersetModelView(ModelView):
     page_size = 100
     """Overrite detaul list template"""
     #list_template = 'superset/fab_overrides/list_json.html'
-    list_template = 'superset/list.html'
+    #list_template = 'superset/list.html'
 
 class ListWidgetWithCheckboxes(ListWidget):
     """An alternative to list view that renders Boolean fields as checkboxes

@@ -170,6 +170,7 @@ def generate_download_headers(extension):
 
 class DatabaseView(SupersetModelView, DeleteMixin):  # noqa
     datamodel = SQLAInterface(models.Database)
+    list_template = 'superset/fab_overrides/list_db.html'
     list_columns = [
         'database_name', 'backend', 'allow_run_sync', 'allow_run_async',
         'allow_dml', 'creator', 'modified']
@@ -320,6 +321,7 @@ appbuilder.add_view(
 class SliceModelView(SupersetModelView, DeleteMixin):  # noqa
     datamodel = SQLAInterface(models.Slice)
     can_add = False
+    list_template = 'superset/list.html'
     label_columns = {
         'datasource_link': 'Datasource',
     }
@@ -410,6 +412,7 @@ appbuilder.add_view_no_menu(SliceAddView)
 
 class DashboardModelView(SupersetModelView, DeleteMixin):  # noqa
     datamodel = SQLAInterface(models.Dashboard)
+    list_template = 'superset/fab_overrides/list_dashboard.html'
     list_columns = ['dashboard_link', 'creator', 'modified']
     edit_columns = [
         'dashboard_title', 'slug', 'slices', 'owners', 'position_json', 'css',
