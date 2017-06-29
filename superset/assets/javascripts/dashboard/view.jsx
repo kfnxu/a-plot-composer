@@ -55,6 +55,8 @@ function renderAlert() {
         button on the top right to save your changes.
       </Alert>
     </div>,
+    //without alert-container will cause the 'javascripts/dashboard/components/GridLayout.jsx' onResizeStop
+    //this.props.onChange ( which is in this file ) 
     document.getElementById('alert-container'),
   );
 }
