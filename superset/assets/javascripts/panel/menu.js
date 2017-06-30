@@ -18,7 +18,8 @@ const data = {
     { text: 'App Setting', icon: <Web/>, link: '/#/setting' },
     { text: 'Data Import', icon: <GridOn/>, link: '/#/dataimport' },
     { text: 'Chart', icon: <Assessment/>, link: '/#/chartboard' },
-    { text: 'Users', icon: <GridOn/>, link: '/users/lists/' },
+    { text: 'Roles', icon: <GridOn/>, link: '/roles/list/' },
+    { text: 'Users', icon: <GridOn/>, link: '/users/list/' },
 
   ],
 

@@ -10,7 +10,7 @@ import {
 } from 'material-ui/Table';
 import { appSetup } from './common';
 
-export default class ListViewPage extends React.Component{
+export default class WelcomeViewPage extends React.Component{
 
   constructor(props) {
     super(props);
@@ -21,15 +21,12 @@ export default class ListViewPage extends React.Component{
 
   getData(filters) {
     var self = this;
-    //var view = 'slicemodelview';
-    var path = ((window.location.pathname).split('/')).slice(1,2);
-    console.log('list.jsx url path', path[0], path, window.location.pathname)
-    var view = path[0]
+    var view = 'DashboardModelViewAsync';
     if (filters == "" || filters == null ) {
         var base_url = "/" + view.toLowerCase() + "/api/read";
     }
     else {
-        var base_url = "/" +  view.toLowerCase() +  "/api/read?_flt_0_name=" + filters;
+        var base_url = "/" + view.toLowerCase() +  "/api/read?_flt_0_name=" + filters;
     }
 
     $.ajax({
@@ -111,6 +108,7 @@ export default class ListViewPage extends React.Component{
 
     return(
       <div>
+      <RaisedButton label="add" primary={true} linkButton={true} href="/dashboardmodelviewasync/add" />
       <input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />
       <div class="table-responsive">
       {tableNode()}

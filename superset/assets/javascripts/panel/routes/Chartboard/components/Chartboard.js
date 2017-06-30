@@ -11,7 +11,7 @@ import SqllabboardViewPage  from '../../../../SqlLab/view';
 import ProfileViewPage  from '../../../../profile/view';
 
 import ListboardViewPage    from '../../../../list';
-import WelcomeboardViewPage from '../../../../welcome.view';
+//import WelcomeboardViewPage from '../../../../welcome.view';
 
 export default class Chartboard extends React.Component {
   constructor (props) {
@@ -24,30 +24,35 @@ export default class Chartboard extends React.Component {
     console.log('chartboard url path', path, window.location)
     switch (path) {
       case 'superset/dashboard':
-        return <DashboardViewPage {...this.props} />
+        return <DashboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
 
       case 'superset/explore':
-        return <ExploreboardViewPage {...this.props} />
+        return <ExploreboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
 
       case 'superset/sqllab':
-        return <SqllabboardViewPage {...this.props} />
+        return <SqllabboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
 
       case 'slicemodelview/list':
-        return <ListboardViewPage  {...this.props} />
+      case 'databaseview/list':
+      case 'users/list':
+      case 'roles/list':
+        return <ListboardViewPage  {...this.props} style={ {overflow: 'scroll'} } />
 
       case 'superset/profile':
-        return <ProfileViewPage  {...this.props} />
+        return <ProfileViewPage  {...this.props} style={ {overflow: 'scroll'} } />
 
       default:
-        return <WelcomeboardViewPage  {...this.props} /> 
+        return <ListboardViewPage  {...this.props} style={ {overflow: 'scroll'} } />
     }
   }
 
   render () {
     return (
-      <Paper style={ {height:'100%', width:'100%'} }>
+      <div>
+      <Paper style={ {overflow: 'scroll'} }>
         { this.getViewComponent() }
       </Paper>
+      </div>
     )
   }
 }

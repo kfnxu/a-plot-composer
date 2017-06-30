@@ -167,10 +167,17 @@ def generate_download_headers(extension):
     }
     return headers
 
+class Roles(SupersetModelView, DeleteMixin):  # noqa
+    list_template = 'superset/list.html'
+
+class Users(SupersetModelView, DeleteMixin):  # noqa
+    list_template = 'superset/list.html'
+
 
 class DatabaseView(SupersetModelView, DeleteMixin):  # noqa
     datamodel = SQLAInterface(models.Database)
-    list_template = 'superset/fab_overrides/list_db.html'
+    #list_template = 'superset/fab_overrides/list_db.html'
+    list_template = 'superset/list.html'
     list_columns = [
         'database_name', 'backend', 'allow_run_sync', 'allow_run_async',
         'allow_dml', 'creator', 'modified']
@@ -378,8 +385,8 @@ class SliceModelView(SupersetModelView, DeleteMixin):  # noqa
             "To create a new slice, you can open a data source "
             "through the `Sources` menu, or alter an existing slice "
             "from the `Slices` menu"), "info")
-        return redirect('/superset/welcome')
-
+        #return redirect('/superset/welcome')
+        return redirect('/dashboardmodelview/list/#/')
 
 appbuilder.add_view(
     SliceModelView,
@@ -412,7 +419,9 @@ appbuilder.add_view_no_menu(SliceAddView)
 
 class DashboardModelView(SupersetModelView, DeleteMixin):  # noqa
     datamodel = SQLAInterface(models.Dashboard)
-    list_template = 'superset/fab_overrides/list_dashboard.html'
+    #list_template = 'superset/fab_overrides/list_dashboard.html'
+    list_template = 'superset/list.html'
+
     list_columns = ['dashboard_link', 'creator', 'modified']
     edit_columns = [
         'dashboard_title', 'slug', 'slices', 'owners', 'position_json', 'css',

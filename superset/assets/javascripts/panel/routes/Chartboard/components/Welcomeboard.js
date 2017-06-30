@@ -3,7 +3,7 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
 import PageBase from '../../../components/PageBase';
 import PropTypes from 'prop-types'
-import WelcomeboardViewPage from '../../../../welcome.view';
+import WelcomeboardViewPage from '../../../../list';
 
 export const Welcomeboard = (props) => {
   const styles = {
