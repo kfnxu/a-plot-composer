@@ -66,6 +66,7 @@ export default class ListViewPage extends React.Component{
             return ( <div></div> )
         
         return (
+        <div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -106,13 +107,15 @@ export default class ListViewPage extends React.Component{
             }
           </TableBody>
         </Table>
+        </div>
         )
        }
 
     return(
       <div>
       <input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />
-      <div class="table-responsive">
+      
+      <div style={{height:'100%', overflow:'auto'}}>
       {tableNode()}
       </div>
       </div>

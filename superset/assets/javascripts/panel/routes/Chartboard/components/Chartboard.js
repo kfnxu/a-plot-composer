@@ -24,34 +24,32 @@ export default class Chartboard extends React.Component {
     console.log('chartboard url path', path, window.location)
     switch (path) {
       case 'superset/dashboard':
-        return <DashboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
+        return <DashboardViewPage {...this.props} />
 
       case 'superset/explore':
-        return <ExploreboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
+        return <ExploreboardViewPage {...this.props} />
 
       case 'superset/sqllab':
-        return <SqllabboardViewPage {...this.props} style={ {overflow: 'scroll'} } />
+        return <SqllabboardViewPage {...this.props} />
 
       case 'slicemodelview/list':
       case 'databaseview/list':
       case 'users/list':
       case 'roles/list':
-        return <ListboardViewPage  {...this.props} style={ {overflow: 'scroll'} } />
+        return <ListboardViewPage  {...this.props} />
 
       case 'superset/profile':
-        return <ProfileViewPage  {...this.props} style={ {overflow: 'scroll'} } />
+        return <ProfileViewPage  {...this.props} />
 
       default:
-        return <ListboardViewPage  {...this.props} style={ {overflow: 'scroll'} } />
+        return <ListboardViewPage  {...this.props} />
     }
   }
 
   render () {
     return (
       <div>
-      <Paper style={ {overflow: 'scroll'} }>
         { this.getViewComponent() }
-      </Paper>
       </div>
     )
   }
