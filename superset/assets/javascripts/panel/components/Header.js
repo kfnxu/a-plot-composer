@@ -62,8 +62,12 @@ class Header extends React.Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >
-                    <MenuItem primaryText="GBD"/>
-                    <MenuItem primaryText="Forecastring"/>
+                    <MenuItem primaryText="Profile"
+                            href={"/superset/profile/" + document.getElementById("csrf_u").value}
+                    />
+                    <MenuItem primaryText="Logout"
+                            href={"/logout"}
+                    />
                   </IconMenu>
                 </div>
               }
