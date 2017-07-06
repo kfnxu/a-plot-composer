@@ -15,7 +15,7 @@ var actions = {{ actions | get_actions_on_list(modelview_name) }};
     data-bootstrap="{{ bootstrap_data }}"
   >
   </div>
-  <div id="root" style="margin-top:-50px;height: 100%"></div>
+  <div id="root" style="margin-top:-50px;height: 100%; overflow:auto;"></div>
   <div id="ihme-office-log"></div>
 {% include "superset/office.html" %}
 {% endblock %}

@@ -84,9 +84,10 @@ export default class ListViewPage extends React.Component{
               return (
                 <TableRow key={index}> 
                 {self.state.data.list_columns.map(function (column, index) {
-                    var i = item[column];
+                    var i = (item[column]).toString();
                     var s = jQuery(jQuery.parseHTML(i)).text(); 
-                    var a = (   (i).match(/href="([^"]*)/) 
+                    console.log('list.jsx item[column]', i, s )
+                    var a = ( typeof i === 'string'  &&  (i).match(/href="([^"]*)/) 
                              && (i).match(/href="([^"]*)/)[1] !== undefined ) ? 
                              (i).match(/href="([^"]*)/)[1] : "" ;
                     
