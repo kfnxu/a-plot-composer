@@ -11,16 +11,10 @@ import SocialPerson from 'material-ui/svg-icons/social/person';
 1
 const data = {
   menus: [
+    { text: 'Data sources', icon: <Web/>, link: '/databaseview/list' },
+    { text: 'Data filters', icon: <Web/>, link: '/superset/sqllab?list' },
+    { text: 'Visualization', icon: <Web/>, link: '/slicemodelview/list' },
     { text: 'Dashboard', icon: <GridOn/>, link: '/dashboardmodelview/list/' },
-    { text: 'Templates', icon: <Web/>, link: '/slicemodelview/list' },
-    { text: 'Sql Lab', icon: <Web/>, link: '/superset/sqllab?list' },
-    { text: 'Databases', icon: <Web/>, link: '/databaseview/list' },
-
-    { text: 'App Setting', icon: <Web/>, link: '/#/setting' },
-    { text: 'Data Import', icon: <GridOn/>, link: '/#/dataimport' },
-    { text: 'Chart', icon: <Assessment/>, link: '/#/chartboard' },
-    { text: 'Roles', icon: <GridOn/>, link: '/roles/list/' },
-    { text: 'Users', icon: <SocialPerson/>, link: '/users/list/' },
 
   ],
 

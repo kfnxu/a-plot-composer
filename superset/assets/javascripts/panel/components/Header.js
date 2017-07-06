@@ -50,10 +50,10 @@ class Header extends React.Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >
-                    <MenuItem key={1} primaryText="Web"/>
-                    <MenuItem key={2} primaryText="Office Excel"/>
-                    <MenuItem key={3} primaryText="Office Power Point"/>
-                    <MenuItem key={4} primaryText="Office Word"/>
+
+                    <MenuItem key={1} primaryText="App Setting" href={"./#/setting"} />
+                    <MenuItem key={2} primaryText="Data import" href={"./#/dataimport"} />
+                    <MenuItem key={2} primaryText="Data binding" href={"./#/databinding"} />
                   </IconMenu>
                   <IconMenu color={white}
                             iconButtonElement={
@@ -62,6 +62,12 @@ class Header extends React.Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                   >
+                    <MenuItem primaryText="Users"
+                            href={"/users/list/"}
+                    />
+                    <MenuItem primaryText="Roles"
+                            href={"/roles/list/"}
+                    />
                     <MenuItem primaryText="Profile"
                             href={"/superset/profile/" + document.getElementById("csrf_u").value}
                     />

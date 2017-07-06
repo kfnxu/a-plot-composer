@@ -15,16 +15,18 @@ export default class ListViewPage extends React.Component{
   constructor(props) {
     super(props);
     this.state = { data: null };
+    this.sUrl = null;
     appSetup();
   }
 
-
+  
   getData(filters) {
     var self = this;
     //var view = 'slicemodelview';
     var path = ((window.location.pathname).split('/')).slice(1,2);
     console.log('list.jsx url path', path[0], path, window.location.pathname)
     var view = path[0]
+    this.sUrl = view.toLowerCase();
     if (filters == "" || filters == null ) {
         var base_url = "/" + view.toLowerCase() + "/api/read";
     }
@@ -67,6 +69,9 @@ export default class ListViewPage extends React.Component{
         
         return (
         <div>
+        <div>
+        <RaisedButton label="Add" primary={true} linkButton={true} href={ "/" + self.sUrl + "/add"} />
+        </div>
         <Table>
           <TableHeader>
             <TableRow>
@@ -76,6 +81,7 @@ export default class ListViewPage extends React.Component{
                 )
              }
             )}
+                <TableHeaderColumn></TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -83,7 +89,8 @@ export default class ListViewPage extends React.Component{
   
               return (
                 <TableRow key={index}> 
-                {self.state.data.list_columns.map(function (column, index) {
+                {self.state.data.list_columns.map(function (column, indexC) {
+
                     var i = (item[column]).toString();
                     var s = jQuery(jQuery.parseHTML(i)).text(); 
                     console.log('list.jsx item[column]', i, s )
@@ -94,14 +101,15 @@ export default class ListViewPage extends React.Component{
                     console.log('list.jsx item[column]', i, s, a );
                     if ( a && a.length > 0 )
                       return (
-                        <TableRowColumn ><RaisedButton label="View" primary={true} linkButton={true} href={a} /> {s}</TableRowColumn>
+                        <TableRowColumn ><a href={a}>{s}</a></TableRowColumn>
                       )
                     else 
                       return (
                         <TableRowColumn >{s}</TableRowColumn>
                       )
                   })
-                 } 
+                 }
+                 <TableRowColumn ><a href={"/" + self.sUrl + "/edit/" + index}>Edit</a></TableRowColumn> 
                 </TableRow>
               )
             })
