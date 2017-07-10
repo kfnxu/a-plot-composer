@@ -109,7 +109,7 @@ export default class ListViewPage extends React.Component{
                       )
                   })
                  }
-                 <TableRowColumn ><a href={"/" + self.sUrl + "/edit/" + index}>Edit</a></TableRowColumn> 
+                 <TableRowColumn ><a href={"/" + self.sUrl + "/edit/" + (index+1)}>Edit</a></TableRowColumn> 
                 </TableRow>
               )
             })
@@ -122,7 +122,7 @@ export default class ListViewPage extends React.Component{
 
     return(
       <div>
-      <input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />
+      {/*<input class=" filter_val form-control" id="name" name="_flt_0_name" placeholder="Name" type="text" value="" />*/}
       
       <div style={{height:'100%', overflow:'auto'}}>
       {tableNode()}

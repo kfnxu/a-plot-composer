@@ -49,7 +49,9 @@ export default class Chartboard extends React.Component {
   render () {
     return (
       <div>
+      <PageBase style={{height:'100%',overflow:'auto'}} >
         { this.getViewComponent() }
+      </PageBase>
       </div>
     )
   }
