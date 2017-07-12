@@ -2,7 +2,6 @@
 
 A web based tool for end user to compose data visualization plot into dashboard to tell a complete data story.
 
-The following figures show the main screens
 ![Compare - Dashboard](/screenshots/plot.composer.dashboard.bubble.compare.png)
 ![Heatmap data binding - Data and Plot](/screenshots/plot.composer.plot.heatmap.png)
 ![Define data set - Data Query](/screenshots/plot.composer.sqllab.png))
