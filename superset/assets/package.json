@@ -1,5 +1,5 @@
 {
-  "name": "superset",
+  "name": "plotcomposer/superset",
   "version": "0.18.4-alpha.1",
   "description": "Superset is a data exploration platform designed to be visual, intuitive, and interactive.",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
     "database",
     "flask"
   ],
-  "author": "Airbnb",
+  "author": "Kefan,Airbnb",
   "bugs": {
     "url": "https://github.com/airbnb/superset/issues"
   },
