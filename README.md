@@ -1,4 +1,4 @@
-# plot composer
+# a-plot-composer
 
 A web based tool for end user to compose data visualization plots into dashboard to tell a data story.
 
@@ -31,8 +31,8 @@ A web based tool for end user to compose data visualization plots into dashboard
 ## Prerequisites
 * python 2.7
 * python-setuptools
-* gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
-* proxy/cache/loadbalancer server such as Nginx
+ gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
+* Web server such as Nginx
 
 ## Additional resources
 * flask-SQLAlchemy
@@ -48,9 +48,9 @@ A web based tool for end user to compose data visualization plots into dashboard
 * merge most javascript index file to use reactjs
 * request data from api using ajax instead of embeded in html page ( in the progress )
 
-## Plot Composer is based on Superset from AirBnb with Material Design interface using Material-UI lib.
+# a-plot-composer is based on Superset from AirBnb with Material Design interface using Material-UI lib.
 
-## License
+# License
 Apache 2.0
 
 
