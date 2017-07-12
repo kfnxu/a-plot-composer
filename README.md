@@ -11,9 +11,15 @@ A web based tool for end user to compose data visualization plots into dashboard
 
 ## Table of Contents
 
+* [Motivation](#Motivation]
 * [Architecture](#Architecture)
 * [UX design pattern](#UX design pattern)
 * [Additional resources](#additional-resources)
+
+## Motivation
+* use Material Design as UX
+* decouple client-side dependency from backend templates
+* change data request to API based
 
 ## Architecture 
 * client-side: react-redux-material-ui-d3
