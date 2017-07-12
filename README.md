@@ -36,13 +36,13 @@ You'll need the following:
 
 ## Changes from original codebase
 * use material-ui interface instead of flask-appbuild default ui interface 
-* flask-appbuilder template: mainly use newly created panel.html template
+* flask-appbuilder template: mainly use newly created list.html and panel.html templates
 * merge most javascript index file to use reactjs
-* request data from api using ajas instead of embeded in html page ( in the progress )
+* request data from api using ajax instead of embeded in html page ( in the progress )
 
-##Plot Composer is based on Superset from AirBnb with Material Design interface using Material-UI lib.
+## Plot Composer is based on Superset from AirBnb with Material Design interface using Material-UI lib.
 
-##License
+## License
 Apache 2.0
 
 
