@@ -17,7 +17,7 @@ A web based tool for end user to compose data visualization plots into dashboard
 * [Additional resources](#additional-resources)
 
 ## Motivation
-* use Material Design as UX
+* use Material Design for UX
 * decouple client-side dependency from backend templates
 * change data request to API based
 
@@ -29,8 +29,10 @@ A web based tool for end user to compose data visualization plots into dashboard
 * Material design
 
 ## Prerequisites
-You'll need the following:
-* Web server such as Nginx
+* python 2.7
+* python-setuptools
+* gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
+* proxy/cache/loadbalancer server such as Nginx
 
 ## Additional resources
 * flask-SQLAlchemy
