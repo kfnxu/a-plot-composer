@@ -32,6 +32,12 @@ You'll need the following:
 * react-router
 * material-ui
 
+## Changes from original codebase
+* use material-ui interface instead of flask-appbuild default ui interface 
+* flask-appbuilder template: mainly use newly created panel.html template
+* merge most javascript index file to use reactjs
+* request data from api using ajas instead of embeded in html page ( in the progress )
+
 ##Plot Composer is based on Superset from AirBnb with Material Design interface using Material-UI lib.
 
 ##License
