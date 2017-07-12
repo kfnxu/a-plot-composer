@@ -1,10 +1,13 @@
 # plot composer
 
-A web based tool for end user to compose data visualization plot into dashboard to tell a complete data story.
+A web based tool for end user to compose data visualization plots into dashboard to tell a data story.
 
 ![Compare - Dashboard](/screenshots/plot.composer.dashboard.bubble.compare.png)
 ![Heatmap data binding - Data and Plot](/screenshots/plot.composer.plot.heatmap.png)
 ![Define data set - Data Query](/screenshots/plot.composer.sqllab.png))
+![Plot - List](/screenshots/plot.composer.slice.list.png)
+![Dashboard - list](/screenshots/plot.composer.dashboard.png)
+![Data json format - Data api](/screenshots/plot.composer.data.api.png)
 
 ## Table of Contents
 
