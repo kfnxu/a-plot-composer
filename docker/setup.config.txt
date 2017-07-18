@@ -1,0 +1,36 @@
+# example of setup
+# docker host configuration file
+[kxu@instance ~]$ cat /etc/docker/daemon.json 
+{
+"hosts": ["tcp://10.0.0.101:2375"]
+}
+
+# restart the docker daemon
+sudo systemctl restart docker
+
+# test from remote to connect to docker host
+docker -H=10.0.0.101:2375 images
+# should list of docker images
+
+# list of containers
+docker -H=10.0.0.101:2375 ps -a
+
+# result
+CONTAINER ID        IMAGE                   COMMAND                  CREATED             STATUS              PORTS                              NAMES
+285c1bc1f4ef        rancher/server:stable   "/usr/bin/entry /u..."   About an hour ago   Up 5 minutes        3306/tcp, 0.0.0.0:8080->8080/tcp   compassionate_panini
+[kxu@instance-us-west docker]$ docker -H=10.0.0.101:2375 images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+rancher/server      stable              d0b8919fc947        3 days ago          969MB
+
+# build a centos container
+docker -H=10.138.0.201:2375 pull centos
+
+# run centos container as -it
+docker -H=10.138.0.201:2375 run -it centos
+
+# build a rancher server as container on docker host
+sudo  docker run -d --restart=unless-stopped -p 8080:8080 rancher/server:stable
+
+# build plot-server image
+docker -H=10.138.0.201:2375 image build .
+
