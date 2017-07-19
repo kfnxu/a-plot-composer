@@ -26,7 +26,7 @@ RUN yum -y  install libsemanage-python.x86_64
 RUN yum -y  install policycoreutils-python
 RUN yum -y  install libsemanage.x86_64
 RUN yum -y  install libsemanage-python.x86_64
-RUN yum -y  upgrade python-setuptools
+RUN yum -y install python-setuptools.noarch
 
 RUN yum -y install epel-release
 
@@ -58,17 +58,18 @@ RUN pip install flask-alembic
 RUN pip install flask-appbuilder
 RUN pip install Flask-MySQL
 
-RUN yum -y install python-setuptools.noarch 
+RUN pip install setuptools --upgrade
+
 RUN python ./setup.py install
 RUN superset runserver -p 8088 -t 300 &
 
 # cleanup
-RUN yum -qy autoremove
+RUN yum -y autoremove
 
 # add scripts to the container
 
 # add the application to the container
 # locales to UTF-8
-RUN locale-gen C.UTF-8 && /usr/sbin/update-locale LANG=C.UTF-8
-ENV LC_ALL C.UTF-8
+#RUN locale-gen C.UTF-8 && /usr/sbin/update-locale LANG=C.UTF-8
+#ENV LC_ALL C.UTF-8
 
