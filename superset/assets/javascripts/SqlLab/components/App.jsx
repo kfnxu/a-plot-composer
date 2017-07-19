@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import TabbedSqlEditors from './TabbedSqlEditors';
 import QueryAutoRefresh from './QueryAutoRefresh';
 import QuerySearch from './QuerySearch';
@@ -55,6 +56,15 @@ class App extends React.PureComponent {
     if (this.state.action && this.state.action == '?list' ) {
       content = (
         <div className="container-fluid">
+          <div className="row">
+            <div className="col-md-12">
+               <RaisedButton label="Add" primary={true} linkButton={true} href={ "/superset/sqllab#/" } />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            </div>
+          </div>
           <div className="row">
             <div className="col-md-12">
               <QuerySearch height={this.state.contentHeight} actions={this.props.actions} />
