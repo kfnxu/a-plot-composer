@@ -59,8 +59,13 @@ sudo pip install flask-appbuilder
 sudo pip install Flask-MySQL
 
 sudo pip install setuptools --upgrade
-
 sudo python ./setup.py install
+
+sudo fabmanager create-admin --app superset
+sudo superset db upgrade
+sudo superset load_examples
+sudo superset init
+
 sudo superset runserver -p 8088 -t 300 &
 
 ## cleanup

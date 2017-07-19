@@ -32,7 +32,7 @@ RUN yum -y install epel-release
 
 # install basic apps, one per line for better caching
 RUN yum install -y git
-RUN yum install -y sudo
+RUN yum install -y RUN
 RUN yum install -y wget
 RUN yum -y install python-pip 
 RUN yum -y install nodejs
@@ -61,6 +61,11 @@ RUN pip install Flask-MySQL
 RUN pip install setuptools --upgrade
 
 RUN python ./setup.py install
+RUN fabmanager create-admin --app superset
+RUN superset db upgrade
+RUN superset load_examples
+RUN superset init
+
 RUN superset runserver -p 8088 -t 300 &
 
 # cleanup
