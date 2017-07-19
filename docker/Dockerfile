@@ -10,32 +10,57 @@ LABEL version="1.0"
 LABEL description="visengine image with Dockerfile."
 
 # update sources list
+
 RUN yum -y update
+RUN yum -y install gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
+RUN yum -y  install python-devel.x86_64 libxml2-devel.x86_64 libxslt-devel.x86_64
+RUN yum -y  install openssl.x86_64 openssl-libs.x86_64
+RUN yum -y  install openssl-devel.x86_64
+RUN yum -y  install cyrus-sasl-devel.x86_64
+RUN yum -y  install cyrus-sasl-lib.x86_64
+RUN yum -y  install cyrus-sasl.x86_64
+RUN yum -y  install gcc-c++
+RUN yum -y  install net-tools.x86_64
+RUN yum -y  install libsemanage.x86_64
+RUN yum -y  install libsemanage-python.x86_64
+RUN yum -y  install policycoreutils-python
+RUN yum -y  install libsemanage.x86_64
+RUN yum -y  install libsemanage-python.x86_64
+RUN yum -y  upgrade python-setuptools
+
 RUN yum -y install epel-release
 
 # install basic apps, one per line for better caching
-RUN yum install -qy git
-RUN yum install -qy sudo
-RUN yum install -qy wget
+RUN yum install -y git
+RUN yum install -y sudo
+RUN yum install -y wget
 RUN yum -y install python-pip 
 RUN yum -y install nodejs
 RUN npm install -g yarn
 
 # install app runtimes and modules
-RUN git clone https://github.com/kfnxu/a-plot-composer.git
 RUN pip install virtualenv
-RUN pip install numpy
 RUN mkdir --parent /srv/python/src
-RUN cd /srv/python
-RUN virtualenv venv
-RUN . ./venv/bin/activate
-RUN cd src
-RUN git clone https://github.com/kfnxu/a-plot-composer.git
-RUN cd superset/superset/assets/
-RUN yarn run install
-RUN yarn run build
-RUN cd ../../
-RUN python setup.py install
+WORKDIR /srv/python
+RUN virtualenv /srv/python/venv
+RUN . /srv/python/venv/bin/activate
+RUN pip install numpy
+WORKDIR /srv/python/src/ 
+RUN git clone -v  https://github.com/kfnxu/a-plot-composer.git 
+#COPY plotcomposer  /srv/python/src/plotcomposer 
+WORKDIR /srv/python/src/a-plot-composer/superset/assets/
+RUN yarn install
+RUN yarn build
+WORKDIR /srv/python/src/a-plot-composer
+RUN pip install flask
+RUN pip install flask-wtf
+RUN pip install flask-alembic
+RUN pip install flask-appbuilder
+RUN pip install Flask-MySQL
+
+RUN yum -y install python-setuptools.noarch 
+RUN python ./setup.py install
+RUN superset runserver -p 8088 -t 300 &
 
 # cleanup
 RUN yum -qy autoremove
@@ -43,7 +68,6 @@ RUN yum -qy autoremove
 # add scripts to the container
 
 # add the application to the container
-
 # locales to UTF-8
 RUN locale-gen C.UTF-8 && /usr/sbin/update-locale LANG=C.UTF-8
 ENV LC_ALL C.UTF-8
