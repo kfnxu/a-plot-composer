@@ -1,3 +1,7 @@
+# to clean the all images and containers
+#  docker -H=10.10.1.101:2375 rm $(docker -H=10.10.1.101:2375 ps -a -q)
+#  docker -H=10.10.1.101:2375 rmi -f $(docker -H=10.10.1.101:2375 images -q)
+
 # example of setup
 # docker host configuration file
 [kxu@instance ~]$ cat /etc/docker/daemon.json 
@@ -23,19 +27,19 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 rancher/server      stable              d0b8919fc947        3 days ago          969MB
 
 # build a centos container
-docker -H=10.138.0.201:2375 pull centos
+docker -H=10.10.1.101:2375 pull centos
 
 # run centos container as -it
-docker -H=10.138.0.201:2375 run -it centos
+docker -H=10.10.1.101:2375 run -it centos
 
 # build a rancher server as container on docker host
 sudo  docker run -d --restart=unless-stopped -p 8080:8080 rancher/server:stable
 
 # build plot-server image
-# docker -H=10.138.0.201:2375 image build .
+# docker -H=10.10.1.101:2375 image build .
 # use tag command to change 'none' to 'tag-name'
-# docker -H=10.138.0.201:2375 tag 86b4378e8199 plotcomposer
+# docker -H=10.10.1.101:2375 tag 86b4378e8199 plotcomposer
 # use '-t' option to tag the final image to a specific name
-docker -H=10.138.0.201:2375 image build -t datavisualization/plotcomposer .
+docker -H=10.10.1.101:2375 image build -t datavisualization/plotcomposer .
 
 
