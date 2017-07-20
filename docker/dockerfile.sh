@@ -11,7 +11,8 @@
 
 # update sources list
 
-sudo yum -y update
+yum -y update
+yum -y install sudo
 sudo yum -y install gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
 sudo yum -y  install python-devel.x86_64 libxml2-devel.x86_64 libxslt-devel.x86_64
 sudo yum -y  install openssl.x86_64 openssl-libs.x86_64
@@ -41,32 +42,44 @@ sudo npm install -g yarn
 # install app runtimes and modules
 sudo pip install virtualenv
 sudo mkdir --parent /srv/python/src
-cd /srv/python
 sudo virtualenv /srv/python/venv
-sudo . /srv/python/venv/bin/activate
-sudo pip install numpy
+
+# add user
+adduser composer
+usermod -aG wheel composer
+
+cd /srv/python
+sudo  . /srv/python/venv/bin/activate
+sudo  pip install numpy
 cd /srv/python/src/ 
-sudo git clone -v  https://github.com/kfnxu/a-plot-composer.git 
+sudo  git clone -v  https://github.com/kfnxu/a-plot-composer.git 
 #COPY plotcomposer  /srv/python/src/plotcomposer 
 cd /srv/python/src/a-plot-composer/superset/assets/
-sudo yarn install
-sudo yarn build
+
+# yarn install start to have error loading mapgl
+# it try to git clone using ssh://git@github.com
+# this is the fix
+git config --global url."https://github.com".insteadOf "ssh://git@github.com"
+
+sudo  yarn install
+sudo  yarn build
 cd /srv/python/src/a-plot-composer
-sudo pip install flask
-sudo pip install flask-wtf
-sudo pip install flask-alembic
-sudo pip install flask-appbuilder
-sudo pip install Flask-MySQL
+sudo  pip install flask
+sudo  pip install flask-wtf
+sudo  pip install flask-alembic
+sudo  pip install flask-appbuilder
+sudo  pip install Flask-MySQL
 
-sudo pip install setuptools --upgrade
-sudo python ./setup.py install
+sudo  pip install setuptools --upgrade
+sudo  python ./setup.py install
 
-sudo fabmanager create-admin --app superset
-sudo superset db upgrade
-sudo superset load_examples
-sudo superset init
+sudo  fabmanager create-admin --app superset
+sudo  superset db upgrade
+sudo  superset load_examples
+sudo  superset init
 
-sudo superset runserver -p 8088 -t 300 &
+sudo chown -R composer:composer /srv/python
+sudo  superset runserver -p 8080 -t 300 &
 
 ## cleanup
 #sudo yum -y autoremove

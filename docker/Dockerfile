@@ -49,6 +49,10 @@ WORKDIR /srv/python/src/
 RUN git clone -v  https://github.com/kfnxu/a-plot-composer.git 
 #COPY plotcomposer  /srv/python/src/plotcomposer 
 WORKDIR /srv/python/src/a-plot-composer/superset/assets/
+# yarn install start to have error loading mapgl
+# it try to git clone using ssh://git@github.com
+# this is the fix
+RUN git config --global url."https://github.com".insteadOf "ssh://git@github.com"
 RUN yarn install
 RUN yarn build
 WORKDIR /srv/python/src/a-plot-composer
