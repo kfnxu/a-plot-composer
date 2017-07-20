@@ -1,0 +1,19 @@
+{% extends "superset/basic.html" %}
+{% block body %}
+  <div
+    id="js-explore-view-container"
+    class="dashboard container-fluid"
+    data-bootstrap="{{ bootstrap_data }}"
+  >
+  {% include 'superset/flash_wrapper.html' %}
+  </div>
+  <div id="root" style="margin-top:-40px;height: 100%;overflow:auto;"></div>
+{% endblock %}
+
+{% block tail_js %}
+  {{ super() }}
+  {% with filename="panel" %}
+    {% include "superset/partials/_script_tag.html" %}
+  {% endwith %}
+{% endblock %}
+
