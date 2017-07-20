@@ -1,7 +1,7 @@
 {
   "name": "plotcomposer",
   "version": "0.18.4-alpha.1",
-  "description": "Superset is a data exploration platform designed to be visual, intuitive, and interactive.",
+  "description": "A web based tool for end user to compose data visualization plots into dashboard to tell a data story.",
   "license": "Apache-2.0",
   "directories": {
     "doc": "docs",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/airbnb/superset.git"
+    "url": "git+https://github.com/kfnxu/a-plot-composer.git"
   },
   "keywords": [
     "big",
@@ -34,9 +34,9 @@
   ],
   "author": "Kefan,Airbnb",
   "bugs": {
-    "url": "https://github.com/airbnb/superset/issues"
+    "url": "https://github.com/kfnxu/a-plot-composer/issues"
   },
-  "homepage": "https://github.com/airbnb/superset#readme",
+  "homepage": "https://github.com/kfnxu/a-plot-composer#readme",
   "dependencies": {
     "autobind-decorator": "^1.3.3",
     "babel-register": "^6.24.1",
