@@ -32,7 +32,7 @@ A web based tool for end user to compose data visualization plots into dashboard
 * python 2.7
 * python-setuptools
 * gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
-* proxy server such as Nginx
+* proxy server such as Nginx ( see nginx/proxy.conf example )
 
 ## Additional resources
 * flask-SQLAlchemy
