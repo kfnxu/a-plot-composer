@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="../build/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="../build/nv.d3.js"></script>
+    <script src="lib/stream_layers.js"></script>
+
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #chart1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class='with-3d-shadow with-transitions'>
+
+<div id="chart1" class='with-3d-shadow with-transitions'>
+    <svg> </svg>
+</div>
+
+<script>
+
+    // register our custom symbols to nvd3
+    // make sure your path is valid given any size because size scales if the chart scales.
+    nv.utils.symbolMap.set('thin-x', function(size) {
+        size = Math.sqrt(size);
+        return 'M' + (-size/2) + ',' + (-size/2) +
+                'l' + size + ',' + size +
+                'm0,' + -(size) +
+                'l' + (-size) + ',' + size;
+    });
+
+    //var testdata = stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
+    var testdata = stream_layers(3,10+Math.random()*100,.1).map(function(data, i) {
+        return {
+            key: 'Stream' + i,
+            values: data.map(function(a){a.y = a.y * (i <= 1 ? -1 : 1); return a})
+        };
+    });
+
+    console.log('stream layer data', testdata);
+
+    testdata[0].type = "area";
+    testdata[0].yAxis = 1;
+    testdata[1].type = "bar";
+    testdata[1].yAxis = 1;
+    testdata[2].type = "line";
+    testdata[2].yAxis = 1;
+    /* 
+    testdata[3].type = "line";
+    testdata[3].yAxis = 2;
+    testdata[4].type = "scatter";
+    testdata[4].yAxis = 1;
+    testdata[5].type = "scatter";
+    testdata[5].yAxis = 2;
+    testdata[6].type = "bar";
+    testdata[6].yAxis = 2;
+    testdata[7].type = "bar";
+    testdata[7].yAxis = 2;
+    testdata[8].type = "bar";
+    testdata[8].yAxis = 2;
+    */
+
+    function randomData(groups, points) { //# groups,# points per group
+        //shapes = ['circle'],
+        var data = [],
+            shapes = ['thin-x', 'circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+            random = d3.random.normal();
+
+        for (i = 0; i < groups; i++) {
+            data.push({
+                key: 'Group ' + i,
+                values: [],
+                slope: Math.random() - .01,
+                intercept: Math.random() - .5
+            });
+
+            for (j = 0; j < points; j++) {
+                data[i].values.push({
+                    x: random(),
+                    y: random(),
+                    size: Math.random(),
+                    shape: shapes[j % shapes.length]
+                });
+            }
+        }
+
+        console.log('shape data', data);
+        return data;
+    }
+
+    var rdata = randomData(4,40);
+    for ( t=0; t<rdata.length; t++){
+           rdata[t].type = "scatter"; 
+           rdata[t].yAxis = 2;
+           testdata.push(rdata[t]);
+    }
+
+    nv.addGraph(function() {
+        var chart = nv.models.multiChart()
+            .margin({top: 30, right: 60, bottom: 50, left: 70})
+            //.color(d3.scale.category10().range());
+
+            //.showDistX(true)
+            //.showDistY(true)
+            .useVoronoi(true)
+            .color(d3.scale.category10().range())
+            .duration(300)
+
+        //chart.xAxis.tickFormat(d3.format(',f'));
+        //chart.yAxis1.tickFormat(d3.format(',.1f'));
+        //chart.yAxis2.tickFormat(d3.format(',.1f'));
+        chart.yAxis1.tickFormat(d3.format('.02f'));
+        chart.yAxis2.tickFormat(d3.format('.02f'));
+
+        chart.xAxis.tickFormat(d3.format('.02f'));
+        //chart.yAxis1.tickFormat(d3.format('.02f'));
+
+        d3.select('#chart1 svg')
+            .datum(testdata)
+            .transition().duration(500).call(chart);
+
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
+
+    console.log('stream layer data modified', testdata);
+
+</script>
+</body>
+</html>
