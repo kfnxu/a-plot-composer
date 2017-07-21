@@ -27,6 +27,7 @@ RUN yum -y  install policycoreutils-python
 RUN yum -y  install libsemanage.x86_64
 RUN yum -y  install libsemanage-python.x86_64
 RUN yum -y install python-setuptools.noarch
+RUN yum -y install mysql
 
 RUN yum -y install epel-release
 

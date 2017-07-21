@@ -28,6 +28,7 @@ sudo yum -y  install policycoreutils-python
 sudo yum -y  install libsemanage.x86_64
 sudo yum -y  install libsemanage-python.x86_64
 sudo yum -y install python-setuptools.noarch
+sudo yum -y install mysql
 
 sudo yum -y install epel-release
 
