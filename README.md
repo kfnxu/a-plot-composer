@@ -43,6 +43,9 @@ A web based tool for end user to compose data visualization plots into dashboard
 * material-ui
 * redis 
 
+## Todo
+* add more nvd3 charts to current visualization type list
+
 ## Changes from original codebase
 * use material-ui interface instead of flask-appbuild default ui interface 
 * flask-appbuilder template: mainly use newly created list.html and panel.html templates
