@@ -69,6 +69,7 @@ sudo  pip install flask-wtf
 sudo  pip install flask-alembic
 sudo  pip install flask-appbuilder
 sudo  pip install Flask-MySQL
+sudo  pip install mysql-connector-python-rf
 
 sudo  pip install setuptools --upgrade
 sudo  python ./setup.py install
