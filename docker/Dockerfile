@@ -61,7 +61,7 @@ RUN pip install flask-wtf
 RUN pip install flask-alembic
 RUN pip install flask-appbuilder
 RUN pip install Flask-MySQL
-
+RUN pip install mysql-connector-python-rf
 RUN pip install setuptools --upgrade
 
 RUN python ./setup.py install
