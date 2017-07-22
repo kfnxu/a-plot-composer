@@ -71,6 +71,7 @@ export default class VizTypeControl extends React.PureComponent {
           ))}
         </Row>);
     }
+    console.log('VizTypeControl.jsx rows', rows);
     return (
       <div>
         <ControlHeader

@@ -283,6 +283,62 @@ function nvd3Vis(slice, payload) {
         chart = nv.models.bulletChart();
         break;
 
+      case 'multichart': 
+
+         var groups = 4; 
+         var points = 20;
+         //shapes = ['circle'],
+         var data = [],
+            shapes = ['thin-x', 'circle', 'cross', 
+                      'triangle-up', 'triangle-down', 
+                      'diamond', 'square'],
+            random = d3.random.normal();
+
+         for (i = 0; i < groups; i++) {
+            data.push({
+                key: 'Group ' + i,
+                values: [],
+                slope: Math.random() - .01,
+                intercept: Math.random() - .5
+            });
+
+            for (j = 0; j < points; j++) {
+                data[i].values.push({
+                    x: random(),
+                    y: random(),
+                    size: Math.random(),
+                    shape: shapes[j % shapes.length]
+                });
+            }
+         }
+
+         console.log('shape data', data);
+         payload.data = data; 
+
+         nv.utils.symbolMap.set('thin-x', function(size) {
+         size = Math.sqrt(size);
+         return 'M' + (-size/2) + ',' + (-size/2) +
+                'l' + size + ',' + size +
+                'm0,' + -(size) +
+                'l' + (-size) + ',' + size;
+         });
+
+         var chart = nv.models.multiChart()
+            .margin({top: 30, right: 60, bottom: 50, left: 70})
+            .useVoronoi(true)
+            .color(d3.scale.category10().range())
+            .duration(300)
+
+         chart.yAxis1.tickFormat(d3.format('.02f'));
+         chart.yAxis2.tickFormat(d3.format('.02f'));
+         chart.xAxis.tickFormat(d3.format('.02f'));
+         //d3.select('#chart1 svg')
+         //    .datum(testdata)
+         //    .transition().duration(500).call(chart);
+         //nv.utils.windowResize(chart.update);
+
+         break;
+      
       default:
         throw new Error('Unrecognized visualization for nvd3' + vizType);
     }
