@@ -1059,6 +1059,13 @@ class HistogramViz(BaseViz):
         chart_data = df[df.columns[0]].values.tolist()
         return chart_data
 
+class NVD3MultiChartViz(NVD3DualLineViz):
+
+    """A multichart """
+
+    viz_type = "multichart"
+    sort_series = True
+    verbose_name = _("MultiChart")
 
 class DistributionBarViz(DistributionPieViz):
 
@@ -1447,6 +1454,54 @@ class HorizonViz(NVD3TimeSeriesViz):
         '<a href="https://www.npmjs.com/package/d3-horizon-chart">'
         'd3-horizon-chart</a>')
 
+class MultiChartViz(NVD3Viz):
+
+    """Based on the NVD3 bubble chart"""
+
+    viz_type = "multichart"
+    verbose_name = _("Multi Chart")
+    is_timeseries = False
+
+    def query_obj(self):
+        form_data = self.form_data
+        d = super(BubbleViz, self).query_obj()
+        d['groupby'] = list({
+            form_data.get('series'),
+            form_data.get('entity')
+        })
+        self.x_metric = form_data.get('x')
+        self.y_metric = form_data.get('y')
+        self.z_metric = form_data.get('size')
+        self.entity = form_data.get('entity')
+        self.series = form_data.get('series')
+        d['row_limit'] = form_data.get('limit')
+
+        d['metrics'] = [
+            self.z_metric,
+            self.x_metric,
+            self.y_metric,
+        ]
+        if not all(d['metrics'] + [self.entity, self.series]):
+            raise Exception("Pick a metric for x, y and size")
+        return d
+
+    def get_data(self, df):
+        df['x'] = df[[self.x_metric]]
+        df['y'] = df[[self.y_metric]]
+        df['size'] = df[[self.z_metric]]
+        df['shape'] = 'circle'
+        df['group'] = df[[self.series]]
+
+        series = defaultdict(list)
+        for row in df.to_dict(orient='records'):
+            series[row['group']].append(row)
+        chart_data = []
+        for k, v in series.items():
+            chart_data.append({
+                'key': k,
+                'values': v})
+        return chart_data
+
 
 class MapboxViz(BaseViz):
 
@@ -1561,6 +1616,7 @@ viz_types_list = [
     NVD3CompareTimeSeriesViz,
     NVD3TimeSeriesStackedViz,
     NVD3TimeSeriesBarViz,
+    NVD3MultiChartViz,
     DistributionBarViz,
     DistributionPieViz,
     BubbleViz,
