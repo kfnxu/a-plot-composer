@@ -14,8 +14,6 @@ export const insertChartToTarger = (proxy) => {
   //console.log('insertChartToTarget', proxy); 
   //use localStorage as communication channel
   var value = 'linearChartCmd';
-  ihme.office.publishCommand(value);
-
   return {
     type    : INSERT_CHART,
     payload : value
@@ -27,18 +25,18 @@ export const insertChartToTarger = (proxy) => {
     creating async actions, especially when combined with redux-thunk! */
 
 export const dataAsync = (event, value) => {
-  console.log('dataAsync', event, value);
-  var url = window.ihme.office.getFromLocalStorage('inputDataSourceAPI');
-  return (dispatch, getState) =>
-      fetch(url)
-      //fetch(`/api.json`)
-             .then(response => response.json())
-             .then(json => 
-                dispatch({
-                  type    : TEXT_ASYNC,
-                  payload : JSON.stringify(json) 
-                })
-                )
+  //console.log('dataAsync', event, value);
+  //var url = window.ihme.office.getFromLocalStorage('inputDataSourceAPI');
+  //return (dispatch, getState) =>
+  //    fetch(url)
+  //    //fetch(`/api.json`)
+  //           .then(response => response.json())
+  //           .then(json => 
+  //              dispatch({
+  //                type    : TEXT_ASYNC,
+  //                payload : JSON.stringify(json) 
+  //              })
+  //              )
 }
 
 
