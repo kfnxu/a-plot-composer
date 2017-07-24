@@ -285,35 +285,65 @@ function nvd3Vis(slice, payload) {
 
       case 'multichart': 
 
-         var groups = 4; 
+        //chart = nv.models.multiChart();
+        //chart.interpolate('linear');
+        //console.log('superset/assets/visualizations/nvd3_vis.js multichart in ', chart)
+        //break;
+
+         var groups = 8;
          var points = 20;
+         var mh = 1000;
          //shapes = ['circle'],
-         var data = [],
-            shapes = ['thin-x', 'circle', 'cross', 
-                      'triangle-up', 'triangle-down', 
+         var rdata = [],
+            shapes = ['thin-x', 'circle', 'cross',
+                      'triangle-up', 'triangle-down',
                       'diamond', 'square'],
             random = d3.random.normal();
 
-         for (i = 0; i < groups; i++) {
-            data.push({
+         for (var i = 0; i < groups; i++) {
+            rdata.push({
                 key: 'Group ' + i,
                 values: [],
                 slope: Math.random() - .01,
                 intercept: Math.random() - .5
             });
 
-            for (j = 0; j < points; j++) {
-                data[i].values.push({
-                    x: random(),
-                    y: random(),
+            for (var j = 0; j < points; j++) {
+                rdata[i].values.push({
+                    x: random() * mh,
+                    y: random() * mh,
                     size: Math.random(),
                     shape: shapes[j % shapes.length]
                 });
             }
          }
 
-         console.log('shape data', data);
-         payload.data = data; 
+
+         for ( var t=0; t<rdata.length; t++){
+           switch(t){
+            case 0:    rdata[t].type = "scatter";
+                       rdata[t].yAxis = 1;
+                       break; 
+            case 1:    rdata[t].type = "bar";
+                       rdata[t].yAxis = 1;
+                       break;
+            //case 2:    rdata[t].type = "line";
+            //           rdata[t].yAxis = 2;
+            //           break;
+            //case 3:    rdata[t].type = "line";
+            //           rdata[t].yAxis = 1;
+            //           break;
+            default:
+                       rdata[t].type = "scatter";
+                       rdata[t].yAxis = 1;
+                       break;
+           }
+         }
+
+         var groupdata = rdata.concat(payload.data);
+         console.log('visualizations/nvd3_vis.js shape data', payload.data, rdata, groupdata);
+         var orgdata = payload.data;
+         payload.data = groupdata;
 
          nv.utils.symbolMap.set('thin-x', function(size) {
          size = Math.sqrt(size);
@@ -338,9 +368,10 @@ function nvd3Vis(slice, payload) {
          //nv.utils.windowResize(chart.update);
 
          break;
-      
+
       default:
         throw new Error('Unrecognized visualization for nvd3' + vizType);
+
     }
 
     if ('showLegend' in chart && typeof fd.show_legend !== 'undefined') {
