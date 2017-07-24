@@ -905,6 +905,13 @@ class Superset(BaseSupersetView):
             viz_type = form_data.get('viz_type', 'table')
             datasource = ConnectorRegistry.get_datasource(
                 datasource_type, datasource_id, db.session)
+            print("debug multichart")
+            print(viz_type)
+            print(form_data)
+            print(datasource)
+            print(viz)
+            print(viz.viz_types[viz_type])
+            print("end of multichart")
             viz_obj = viz.viz_types[viz_type](
                 datasource,
                 form_data=form_data,
