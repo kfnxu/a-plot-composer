@@ -733,24 +733,31 @@ const visTypes = {
 
   multichart: {
     label: 'Multi Chart',
+
+    requiresTime: true,
     controlPanelSections: [
-      {
-        label: null,
-        controlSetRows: [
-          ['series', 'entity'],
-          ['x', 'y'],
-          ['size', 'limit'],
-        ],
-      },
       {
         label: 'Chart Options',
         controlSetRows: [
-          ['show_legend', 'max_bubble_size'],
-          ['x_axis_label', 'y_axis_label'],
-          ['x_log_scale', 'y_log_scale'],
+          ['x_axis_format'],
+        ],
+      },
+      {
+        label: 'Y Axis 1',
+        controlSetRows: [
+          ['metric'],
+          ['y_axis_format'],
+        ],
+      },
+      {
+        label: 'Y Axis 2',
+        controlSetRows: [
+          ['metric_2'],
+          ['y_axis_2_format'],
         ],
       },
     ],
+
   },
 
   mapbox: {
