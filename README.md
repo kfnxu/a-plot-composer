@@ -2,6 +2,7 @@
 
 A web based tool for end user to compose data visualization plots into dashboard to tell a data story.
 
+![Multichart](/screenshots/plot.composer.multichart.scatter.png)
 ![Compare - Dashboard](/screenshots/plot.composer.dashboard.bubble.compare.png)
 ![Heatmap data binding - Data and Plot](/screenshots/plot.composer.plot.heatmap.png)
 ![Define data set - Data Query](/screenshots/plot.composer.sqllab.png)
@@ -33,6 +34,9 @@ A web based tool for end user to compose data visualization plots into dashboard
 * python-setuptools
 * gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel
 * proxy server such as Nginx ( see nginx/proxy.conf example )
+
+## New Chart Types
+* multichart
 
 ## Additional resources
 * flask-SQLAlchemy
