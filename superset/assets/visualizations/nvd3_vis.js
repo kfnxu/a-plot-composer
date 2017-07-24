@@ -361,7 +361,28 @@ function nvd3Vis(slice, payload) {
 
          chart.yAxis1.tickFormat(d3.format('.02f'));
          chart.yAxis2.tickFormat(d3.format('.02f'));
-         chart.xAxis.tickFormat(d3.format('.02f'));
+         chart.xAxis
+              .staggerLabels(false)
+              .tickFormat(d3.format('.02f'));
+
+         //chart.interpolate('linear');
+         chart.useInteractiveGuideline(true)
+         chart.interactiveLayer.tooltip(
+                {
+                    enabled: true,
+                    contentGenerator: function(d) {
+                        var header = moment(d.value).format('dddd, MMM Do YYYY, hh:mm:ss A');
+                        var headerhtml = "<thead><tr><td colspan='3'><strong class='x-value'>" + header + "</strong></td></tr></thead>";
+                        var bodyhtml = "<tbody>";
+                        var series = d.series;
+                        series.forEach(function(c) {
+                            bodyhtml = bodyhtml + "<tr><td class='legend-color-guide'><div style='background-color: " + c.color + ";'></div></td><td class='key'>" + c.key + "</td><td class='value'>" + c.value + "</td></tr>";
+                        });
+                        bodyhtml = bodyhtml+"</tbody>";
+                        return "<table>"+headerhtml+''+bodyhtml+"</table>";
+                    }
+                })
+
          //d3.select('#chart1 svg')
          //    .datum(testdata)
          //    .transition().duration(500).call(chart);
