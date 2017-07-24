@@ -19,6 +19,7 @@ const vizMap = {
   line: require('./nvd3_vis.js'),
   mapbox: require('./mapbox.jsx'),
   markup: require('./markup.js'),
+  multichart: require('./nvd3_vis.js'),
   para: require('./parallel_coordinates.js'),
   pie: require('./nvd3_vis.js'),
   pivot_table: require('./pivot_table.js'),
