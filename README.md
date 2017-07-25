@@ -38,7 +38,28 @@ A web based tool for end user to compose data visualization plots into dashboard
 ## New Chart Types
 * multichart
 
+![Multichart selection](/screenshots/plot.composer.new.chart.workflow.png)
+
 ## Procedure for Adding New Chart Type
+
+data flow
+
+```
+  panel store create-react-store->
+  panel index->
+  panel router->
+  routes/Chartboard/component/charboard->
+  javascripts/explore/index.jsx->
+  VizTypeControl->
+  routes/Chartboard/component/charboard->
+  XHR /superset/datasources/->
+  XHR /superset/favstar/slice/120/count->
+  XHR /superset/explore_json/table/3/?form_data->
+  superset/views/core.py get_viz->
+  javascripts/explore/components/ChartContainer.jsx vizMap->
+  visualizations/nvd3_vis.js->
+```
+files and code sections
 
 ```
 # -a-plot-composer/superset/assets/javascripts/explore/stores/visTypes.js
@@ -204,8 +225,22 @@ A web based tool for end user to compose data visualization plots into dashboard
         if slice_id:
             ...
         else:
-            ...
+            form_data = self.get_form_data()
+            viz_type = form_data.get('viz_type', 'table')
+            datasource = ConnectorRegistry.get_datasource(
+                datasource_type, datasource_id, db.session)
             print("debug multichart")
+            print(viz_type)
+            print(form_data)
+            print(datasource)
+            print(viz)
+            print(viz.viz_types[viz_type])
+            print("end of multichart")
+            viz_obj = viz.viz_types[viz_type](
+                datasource,
+                form_data=form_data,
+            )
+            return viz_obj
 
 ```
 
