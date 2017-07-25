@@ -243,6 +243,12 @@ files and code sections
             return viz_obj
 
 ```
+## Debug
+* install gbd
+  sudo yum install gdb python-debuginfo
+* start debug
+  gdb python
+  run superset runserver -p 8080 -t 300 
 
 ## Additional resources
 * flask-SQLAlchemy

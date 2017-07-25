@@ -1114,6 +1114,14 @@ class NVD3MultiChartViz(NVD3Viz):
                 "yAxis": i+1,
                 "type": "line"
             }
+            print('superset/viz.py i, m, series, ys, d, df')
+            print(i)
+            print(m)
+            print(series)
+            print(ys)
+            print(d)
+            print('df')
+            print(df) 
             chart_data.append(d)
         return chart_data
 
