@@ -41,6 +41,11 @@ A web based tool for end user to compose data visualization plots into dashboard
 ![Multichart selection](/screenshots/plot.composer.new.chart.workflow.png)
 
 ## Procedure for Adding New Chart Type
+primary
+-superset/assets/javascripts/explore/stores/visTypes.js
+ for defining plot-slice control panel setting
+-superset/viz.py
+ for defining how data processed
 
 data flow
 
@@ -245,9 +250,10 @@ files and code sections
 ```
 ## Debug
 * install gbd
+  sudo debuginfo-install glibc
   sudo yum install gdb python-debuginfo
 * start debug
-  gdb python
+  gdb -ex r --args python setup.py install
   run superset runserver -p 8080 -t 300 
 
 ## Additional resources
