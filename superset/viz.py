@@ -1069,21 +1069,8 @@ class NVD3MultiChartViz(NVD3Viz):
     verbose_name = _("MultiChart")
     is_timeseries = True
 
-    def query_obj(self):
-        d = super(NVD3MultiChartViz, self).query_obj()
-        m1 = self.form_data.get('metric')
-        m2 = self.form_data.get('metric_2')
-        d['metrics'] = [m1, m2]
-        if not m1:
-            raise Exception("Pick a metric for left axis!")
-        if not m2:
-            raise Exception("Pick a metric for right axis!")
-        if m1 == m2:
-            raise Exception("Please choose different metrics"
-                            " on left and right axis")
-        return d
+    def to_series(self, df, classed='', title_suffix=''):
 
-    def to_series(self, df, classed=''):
         cols = []
         for col in df.columns:
             if col == '':
@@ -1092,56 +1079,168 @@ class NVD3MultiChartViz(NVD3Viz):
                 cols.append('NULL')
             else:
                 cols.append(col)
-        df.columns = cols
+
+        print('NVD3MultiChartViz df')
+        print(df)
+        print(cols)
+        gb = df.groupby('min__plot_name_id', sort=True)  
+        #gb = df.groupby(cols)
+ 
+        print('NVD3MultiChartViz groupby')
+        print(dir(gb))
+        print(dir(gb.first))
+        #print(gb.groups)
+     
         series = df.to_dict('series')
-        chart_data = []
-        metrics = [
-            self.form_data.get('metric'),
-            self.form_data.get('metric_2')
-        ]
-        for i, m in enumerate(metrics):
-            ys = series[m]
-            if df[m].dtype.kind not in "biufc":
-                continue
-            series_title = m
+        print(series)
+
+        chart_data = [] 
+        for name, group in gb:
+            print(name)
+            print(group)
+            print('--group')
+            values = []
+            plot_type_id = ''
+            for index, row in group.iterrows():
+                  print('--index')
+                  print(index)
+                  print('--row')
+                  print(row)
+                  print('--row[0]')
+                  print(row[0])
+                  if ( plot_type_id == '' ):
+                       plot_type_id = row['min__plot_type'] 
+                  v = { "x": index, "y":row[0] }
+                  values.append(v)
+            print('--value')
+            print(values)
+            plot_type = 'line'
+            if ( plot_type_id == 1 ):
+                 plot_type = 'scatter'
+            elif ( plot_type_id == 2 ):
+                 plot_type = 'line'
+            else: 
+                 plot_type = 'line'
+
             d = {
-                "key": series_title,
+                "key": name,
                 "classed": classed,
-                "values": [
-                    {'x': ds, 'y': ys[ds] if ds in ys else None}
-                    for ds in df.index
-                ],
-                "yAxis": i+1,
-                "type": "line"
+                "values": values,
+                #added for multichart,
+                "yAxis": 1,
+                "type": plot_type,
+
             }
-            print('superset/viz.py i, m, series, ys, d, df')
-            print(i)
-            print(m)
-            print(series)
-            print(ys)
-            print(d)
-            print('df')
-            print(df) 
             chart_data.append(d)
+
+        #for name in df.T.index.tolist():
+        #    ys = series[name]
+        #    if df[name].dtype.kind not in "biufc":
+        #        continue
+        #    if isinstance(name, string_types):
+        #        series_title = name
+        #    else:
+        #        name = ["{}".format(s) for s in name]
+        #        if len(self.form_data.get('metrics')) > 1:
+        #            series_title = ", ".join(name)
+        #        else:
+        #            series_title = ", ".join(name[1:])
+        #    if title_suffix:
+        #        series_title += title_suffix
+
+        #    d = {
+        #        "key": series_title,
+        #        "classed": classed,
+        #        "values": [
+        #            {'x': ds, 'y': ys[ds] if ds in ys else None}
+        #            for ds in df.index
+        #        ],
+        #        #added for multichart,
+        #        "yAxis": 1,
+        #        "type": "line",
+
+        #    }
+        #    chart_data.append(d)
+
         return chart_data
 
     def get_data(self, df):
         fd = self.form_data
         df = df.fillna(0)
-
-        if self.form_data.get("granularity") == "all":
+        if fd.get("granularity") == "all":
             raise Exception("Pick a time granularity for your time series")
 
-        metric = fd.get('metric')
-        metric_2 = fd.get('metric_2')
         df = df.pivot_table(
             index=DTTM_ALIAS,
-            values=[metric, metric_2])
+            columns=fd.get('groupby'),
+            values=fd.get('metrics'))
+
+        fm = fd.get("resample_fillmethod")
+        if not fm:
+            fm = None
+        how = fd.get("resample_how")
+        rule = fd.get("resample_rule")
+        if how and rule:
+            df = df.resample(rule, how=how, fill_method=fm)
+            if not fm:
+                df = df.fillna(0)
+
+        if self.sort_series:
+            dfs = df.sum()
+            dfs.sort_values(ascending=False, inplace=True)
+            df = df[dfs.index]
+
+        if fd.get("contribution"):
+            dft = df.T
+            df = (dft / dft.sum()).T
+
+        rolling_periods = fd.get("rolling_periods")
+        rolling_type = fd.get("rolling_type")
+
+        if rolling_type in ('mean', 'std', 'sum') and rolling_periods:
+            if rolling_type == 'mean':
+                df = pd.rolling_mean(df, int(rolling_periods), min_periods=0)
+            elif rolling_type == 'std':
+                df = pd.rolling_std(df, int(rolling_periods), min_periods=0)
+            elif rolling_type == 'sum':
+                df = pd.rolling_sum(df, int(rolling_periods), min_periods=0)
+        elif rolling_type == 'cumsum':
+            df = df.cumsum()
+
+        num_period_compare = fd.get("num_period_compare")
+        if num_period_compare:
+            num_period_compare = int(num_period_compare)
+            prt = fd.get('period_ratio_type')
+            if prt and prt == 'growth':
+                df = (df / df.shift(num_period_compare)) - 1
+            elif prt and prt == 'value':
+                df = df - df.shift(num_period_compare)
+            else:
+                df = df / df.shift(num_period_compare)
+
+            df = df[num_period_compare:]
 
         chart_data = self.to_series(df)
+
+        time_compare = fd.get('time_compare')
+        if time_compare:
+            query_object = self.query_obj()
+            delta = utils.parse_human_timedelta(time_compare)
+            query_object['inner_from_dttm'] = query_object['from_dttm']
+            query_object['inner_to_dttm'] = query_object['to_dttm']
+            query_object['from_dttm'] -= delta
+            query_object['to_dttm'] -= delta
+
+            df2 = self.get_df(query_object)
+            df2[DTTM_ALIAS] += delta
+            df2 = df2.pivot_table(
+                index=DTTM_ALIAS,
+                columns=fd.get('groupby'),
+                values=fd.get('metrics'))
+            chart_data += self.to_series(
+                df2, classed='superset', title_suffix="---")
+            chart_data = sorted(chart_data, key=lambda x: x['key'])
         return chart_data
-
-
 
 class DistributionBarViz(DistributionPieViz):
 
@@ -1529,54 +1628,6 @@ class HorizonViz(NVD3TimeSeriesViz):
     credits = (
         '<a href="https://www.npmjs.com/package/d3-horizon-chart">'
         'd3-horizon-chart</a>')
-
-class MultiChartViz(NVD3Viz):
-
-    """Based on the NVD3 bubble chart"""
-
-    viz_type = "multichart"
-    verbose_name = _("Multi Chart")
-    is_timeseries = False
-
-    def query_obj(self):
-        form_data = self.form_data
-        d = super(BubbleViz, self).query_obj()
-        d['groupby'] = list({
-            form_data.get('series'),
-            form_data.get('entity')
-        })
-        self.x_metric = form_data.get('x')
-        self.y_metric = form_data.get('y')
-        self.z_metric = form_data.get('size')
-        self.entity = form_data.get('entity')
-        self.series = form_data.get('series')
-        d['row_limit'] = form_data.get('limit')
-
-        d['metrics'] = [
-            self.z_metric,
-            self.x_metric,
-            self.y_metric,
-        ]
-        if not all(d['metrics'] + [self.entity, self.series]):
-            raise Exception("Pick a metric for x, y and size")
-        return d
-
-    def get_data(self, df):
-        df['x'] = df[[self.x_metric]]
-        df['y'] = df[[self.y_metric]]
-        df['size'] = df[[self.z_metric]]
-        df['shape'] = 'circle'
-        df['group'] = df[[self.series]]
-
-        series = defaultdict(list)
-        for row in df.to_dict(orient='records'):
-            series[row['group']].append(row)
-        chart_data = []
-        for k, v in series.items():
-            chart_data.append({
-                'key': k,
-                'values': v})
-        return chart_data
 
 
 class MapboxViz(BaseViz):
