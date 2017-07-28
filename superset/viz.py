@@ -1109,7 +1109,7 @@ class NVD3MultiChartViz(NVD3Viz):
                   print('--row[0]')
                   print(row[0])
                   if ( plot_type_id == '' ):
-                       plot_type_id = row['min__plot_type'] 
+                       plot_type_id = row['min__plot_type_id'] 
                   v = { "x": index, "y":row[0] }
                   values.append(v)
             print('--value')
