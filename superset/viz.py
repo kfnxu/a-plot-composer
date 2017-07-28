@@ -1075,11 +1075,11 @@ class NVD3MultiChartViz(NVD3Viz):
         # column-0 is x
         # column-1 is y
         # column-2 is type-id
-        # column-3 is yAxis
-        # column-4 is name-id
-        # for this setting, df.columns[2] is 'min__plot_name_id'
+        # column-4 is yAxis
+        # column-3 is name-id
+        # for this setting, df.columns[3] is 'min__plot_name_id'
         # gb = df.groupby('min__plot_name_id', sort=True) 
-        gb = df.groupby(df.columns[2], sort=True) 
+        gb = df.groupby(df.columns[3], sort=True) 
         chart_data = [] 
         for name, group in gb:
             print('--group')
@@ -1095,7 +1095,7 @@ class NVD3MultiChartViz(NVD3Viz):
                   print('--row[0]')
                   print(row[0])
                   if ( plot_type_id == '' ):
-                       plot_type_id = row['min__plot_type_id'] 
+                       plot_type_id = row[df.columns[2]] 
                   v = { "x": index, "y":row[0] }
                   values.append(v)
             print('--value')
