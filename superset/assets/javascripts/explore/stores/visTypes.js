@@ -736,28 +736,26 @@ const visTypes = {
 
     requiresTime: true,
     controlPanelSections: [
+      sections.NVD3TimeSeries[0],
       {
         label: 'Chart Options',
         controlSetRows: [
-          ['x_axis_format'],
+          ['show_brush', 'show_legend'],
+          ['rich_tooltip', null],
+          ['show_markers', 'x_axis_showminmax'],
+          ['line_interpolation', 'contribution'],
         ],
       },
       {
-        label: 'Y Axis 1',
+        label: 'Axes',
         controlSetRows: [
-          ['metric'],
-          ['y_axis_format'],
+          ['x_axis_label', 'x_axis_format'],
+          ['y_axis_label', 'y_axis_bounds'],
+          ['y_axis_format', 'y_log_scale'],
         ],
       },
-      {
-        label: 'Y Axis 2',
-        controlSetRows: [
-          ['metric_2'],
-          ['y_axis_2_format'],
-        ],
-      },
+      sections.NVD3TimeSeries[1],
     ],
-
   },
 
   mapbox: {
