@@ -1071,34 +1071,20 @@ class NVD3MultiChartViz(NVD3Viz):
 
     def to_series(self, df, classed='', title_suffix=''):
 
-        cols = []
-        for col in df.columns:
-            if col == '':
-                cols.append('N/A')
-            elif col is None:
-                cols.append('NULL')
-            else:
-                cols.append(col)
-
-        print('NVD3MultiChartViz df')
-        print(df)
-        print(cols)
-        gb = df.groupby('min__plot_name_id', sort=True)  
-        #gb = df.groupby(cols)
- 
-        print('NVD3MultiChartViz groupby')
-        print(dir(gb))
-        print(dir(gb.first))
-        #print(gb.groups)
-     
-        series = df.to_dict('series')
-        print(series)
-
+        # todo change to format to sequence rather than column-name:
+        # column-0 is x
+        # column-1 is y
+        # column-2 is type-id
+        # column-3 is yAxis
+        # column-4 is name-id
+        # for this setting, df.columns[2] is 'min__plot_name_id'
+        # gb = df.groupby('min__plot_name_id', sort=True) 
+        gb = df.groupby(df.columns[2], sort=True) 
         chart_data = [] 
         for name, group in gb:
+            print('--group')
             print(name)
             print(group)
-            print('--group')
             values = []
             plot_type_id = ''
             for index, row in group.iterrows():
@@ -1119,6 +1105,10 @@ class NVD3MultiChartViz(NVD3Viz):
                  plot_type = 'scatter'
             elif ( plot_type_id == 2 ):
                  plot_type = 'line'
+            elif ( plot_type_id == 3 ):
+                 plot_type = 'area'
+            elif ( plot_type_id == 4 ):
+                 plot_type = 'bar'
             else: 
                  plot_type = 'line'
 
@@ -1132,35 +1122,6 @@ class NVD3MultiChartViz(NVD3Viz):
 
             }
             chart_data.append(d)
-
-        #for name in df.T.index.tolist():
-        #    ys = series[name]
-        #    if df[name].dtype.kind not in "biufc":
-        #        continue
-        #    if isinstance(name, string_types):
-        #        series_title = name
-        #    else:
-        #        name = ["{}".format(s) for s in name]
-        #        if len(self.form_data.get('metrics')) > 1:
-        #            series_title = ", ".join(name)
-        #        else:
-        #            series_title = ", ".join(name[1:])
-        #    if title_suffix:
-        #        series_title += title_suffix
-
-        #    d = {
-        #        "key": series_title,
-        #        "classed": classed,
-        #        "values": [
-        #            {'x': ds, 'y': ys[ds] if ds in ys else None}
-        #            for ds in df.index
-        #        ],
-        #        #added for multichart,
-        #        "yAxis": 1,
-        #        "type": "line",
-
-        #    }
-        #    chart_data.append(d)
 
         return chart_data
 

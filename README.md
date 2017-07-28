@@ -250,12 +250,21 @@ files and code sections
 # - sql example for multichart ( not implemented yet )
 following is special formatted sql query for the purpose of creating multichart
 -select x-Axes, y-Axes, plot_type_id, plot_name_id
--plot_type_id:
+-plot_type_id
  1: scatter
  2: line
 -plot_name_id is just unique-id for the chart
 
-example sql query: 
+formated by sequencial order
+        # column-0 is x
+        # column-1 is y
+        # column-2 is type-id
+        # column-4 is yAxis
+        # column-3 is unique-name-id
+
+        # for this setting, df.columns[2] is 'min__plot_name_id'
+
+example sql query 
 
 SELECT x, y, plot_type_id, plot_name_id
 from
