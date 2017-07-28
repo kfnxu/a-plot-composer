@@ -248,6 +248,15 @@ files and code sections
             return viz_obj
             
 # - sql example for multichart ( not implemented yet )
+following is special formatted sql query for the purpose of creating multichart
+-select x-Axes, y-Axes, plot_type_id, plot_name_id
+-plot_type_id:
+ 1: scatter
+ 2: line
+-plot_name_id is just unique-id for the chart
+
+example sql query: 
+
 SELECT x, y, plot_type_id, plot_name_id
 from
 (SELECT year as x, SP_URB_TOTL as y, 1 as plot_type_id, (SP_URB_TOTL+SE_XPD_TOTL_GD_ZS) as x_std, (SP_URB_TOTL+SE_TER_ENRR) as y_std, 101 as plot_name_id
