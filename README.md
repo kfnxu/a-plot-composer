@@ -250,7 +250,7 @@ files and code sections
 # - sql example for multichart ( not implemented yet )
 SELECT x, y, plot_type, plot_name_id
 from
-(SELECT year as x, SP_URB_TOTL as y, 1 as plot_type, (SP_URB_TOTL+SE_XPD_TOTL_GD_ZS) as x_std, (SP_URB_TOTL+SE_TER_ENRR) as y_std, 101 as plot_name_id
+(SELECT year as x, SP_URB_TOTL as y, 1 as plot_type_id, (SP_URB_TOTL+SE_XPD_TOTL_GD_ZS) as x_std, (SP_URB_TOTL+SE_TER_ENRR) as y_std, 101 as plot_name_id
 from wb_health_population
 where SP_URB_TOTL is not null 
 and SP_URB_TOTL < 100
@@ -262,7 +262,7 @@ UNION
 
 SELECT x, x_std as y, plot_type, plot_name_id
 from
-(SELECT year as x, SE_SEC_NENR as y, 1 as plot_type, (SE_SEC_NENR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_SEC_NENR+SE_TER_ENRR) as y_std, 102 as plot_name_id
+(SELECT year as x, SE_SEC_NENR as y, 1 as plot_type_id, (SE_SEC_NENR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_SEC_NENR+SE_TER_ENRR) as y_std, 102 as plot_name_id
 from wb_health_population
 where SP_URB_TOTL is not null 
 and SE_SEC_NENR is not null
@@ -274,7 +274,7 @@ union
 
 SELECT x, y_std as y, plot_type, plot_name_id
 from
-(SELECT year as x, SE_PRM_ENRR as y, 2 as plot_type, (SE_PRM_ENRR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_PRM_ENRR+SE_TER_ENRR) as y_std, 103 as plot_name_id
+(SELECT year as x, SE_PRM_ENRR as y, 2 as plot_type_id, (SE_PRM_ENRR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_PRM_ENRR+SE_TER_ENRR) as y_std, 103 as plot_name_id
 from wb_health_population
 where SE_PRM_ENRR is not null 
 and SE_XPD_TOTL_GD_ZS is not NULL
@@ -285,7 +285,7 @@ UNION
 
 SELECT x, y, plot_type, plot_name_id
 from
-(SELECT year as x, SE_PRM_NENR as y, 2 as plot_type, (SE_PRM_NENR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_PRM_NENR+SE_TER_ENRR) as y_std, 104 as plot_name_id
+(SELECT year as x, SE_PRM_NENR as y, 2 as plot_type_id, (SE_PRM_NENR+SE_XPD_TOTL_GD_ZS) as x_std, (SE_PRM_NENR+SE_TER_ENRR) as y_std, 104 as plot_name_id
 from wb_health_population
 where SE_PRM_NENR is not null 
 and SE_XPD_TOTL_GD_ZS is not NULL
