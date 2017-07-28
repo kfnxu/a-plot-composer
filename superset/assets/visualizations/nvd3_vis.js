@@ -290,9 +290,10 @@ function nvd3Vis(slice, payload) {
         //console.log('superset/assets/visualizations/nvd3_vis.js multichart in ', chart)
         //break;
 
+         /*
          var groups = 8;
          var points = 20;
-         var mh = 1000;
+         var mh = 80; //1000;
          //shapes = ['circle'],
          var rdata = [],
             shapes = ['thin-x', 'circle', 'cross',
@@ -345,6 +346,8 @@ function nvd3Vis(slice, payload) {
          var orgdata = payload.data;
          payload.data = groupdata;
 
+         */
+         console.log('visualizations/nvd3_vis.js shape data', payload.data);
          nv.utils.symbolMap.set('thin-x', function(size) {
          size = Math.sqrt(size);
          return 'M' + (-size/2) + ',' + (-size/2) +
