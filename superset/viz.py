@@ -1107,7 +1107,7 @@ class NVD3MultiChartViz(NVD3Viz):
                   if ( plot_type_id == '' ):
                        #plot_type_id = row[df.columns[2]]
                        plot_type_id = row['plot_type_id'] 
-                  v = { "x": index, "y":row[0] }
+                  v = { "x": row['__timestamp'], "y":row['avg__y'] }
                   values.append(v)
             print('--value')
             print(values)
