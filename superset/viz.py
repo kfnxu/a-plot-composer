@@ -800,6 +800,8 @@ class NVD3TimeSeriesViz(NVD3Viz):
     is_timeseries = True
 
     def to_series(self, df, classed='', title_suffix=''):
+        print('NVD3TimeSeriesViz df')
+        print(df)
         cols = []
         for col in df.columns:
             if col == '':
@@ -1078,8 +1080,12 @@ class NVD3MultiChartViz(NVD3Viz):
         # column-4 is yAxis
         # column-3 is name-id
         # for this setting, df.columns[2] is 'min__plot_name_id'
-        # gb = df.groupby('min__plot_name_id', sort=True) 
-        gb = df.groupby(df.columns[2], sort=True) 
+        # gb = df.groupby('min__plot_name_id', sort=True)
+        print('NVD3MultiChartViz to_series --df, columns')
+        print(df) 
+        print(df.columns)
+        #gb = df.groupby(df.columns[1]) 
+        gb = df.groupby('plot_name_id')
         chart_data = [] 
         for name, group in gb:
             print('--group')
@@ -1095,8 +1101,12 @@ class NVD3MultiChartViz(NVD3Viz):
                   print(row)
                   print('--row[0]')
                   print(row[0])
+                  print('--df.columns[1]')
+                  print(df.columns[1])
+                  print(row[df.columns[1]])
                   if ( plot_type_id == '' ):
-                       plot_type_id = row[df.columns[1]] 
+                       #plot_type_id = row[df.columns[2]]
+                       plot_type_id = row['plot_type_id'] 
                   v = { "x": index, "y":row[0] }
                   values.append(v)
             print('--value')
@@ -1127,60 +1137,63 @@ class NVD3MultiChartViz(NVD3Viz):
         return chart_data
 
     def get_data(self, df):
+        print('NVD3MultiChartViz get_data df, form_data')
         fd = self.form_data
-        df = df.fillna(0)
-        if fd.get("granularity") == "all":
-            raise Exception("Pick a time granularity for your time series")
+        print(df)
 
-        df = df.pivot_table(
-            index=DTTM_ALIAS,
-            columns=fd.get('groupby'),
-            values=fd.get('metrics'))
+        #df = df.fillna(0)
+        #if fd.get("granularity") == "all":
+        #    raise Exception("Pick a time granularity for your time series")
 
-        fm = fd.get("resample_fillmethod")
-        if not fm:
-            fm = None
-        how = fd.get("resample_how")
-        rule = fd.get("resample_rule")
-        if how and rule:
-            df = df.resample(rule, how=how, fill_method=fm)
-            if not fm:
-                df = df.fillna(0)
+        #df = df.pivot_table(
+        #    index=DTTM_ALIAS,
+        #    columns=fd.get('groupby'),
+        #    values=fd.get('metrics'))
 
-        if self.sort_series:
-            dfs = df.sum()
-            dfs.sort_values(ascending=False, inplace=True)
-            df = df[dfs.index]
+        #fm = fd.get("resample_fillmethod")
+        #if not fm:
+        #    fm = None
+        #how = fd.get("resample_how")
+        #rule = fd.get("resample_rule")
+        #if how and rule:
+        #    df = df.resample(rule, how=how, fill_method=fm)
+        #    if not fm:
+        #        df = df.fillna(0)
 
-        if fd.get("contribution"):
-            dft = df.T
-            df = (dft / dft.sum()).T
+        #if self.sort_series:
+        #    dfs = df.sum()
+        #    dfs.sort_values(ascending=False, inplace=True)
+        #    df = df[dfs.index]
 
-        rolling_periods = fd.get("rolling_periods")
-        rolling_type = fd.get("rolling_type")
+        #if fd.get("contribution"):
+        #    dft = df.T
+        #    df = (dft / dft.sum()).T
 
-        if rolling_type in ('mean', 'std', 'sum') and rolling_periods:
-            if rolling_type == 'mean':
-                df = pd.rolling_mean(df, int(rolling_periods), min_periods=0)
-            elif rolling_type == 'std':
-                df = pd.rolling_std(df, int(rolling_periods), min_periods=0)
-            elif rolling_type == 'sum':
-                df = pd.rolling_sum(df, int(rolling_periods), min_periods=0)
-        elif rolling_type == 'cumsum':
-            df = df.cumsum()
+        #rolling_periods = fd.get("rolling_periods")
+        #rolling_type = fd.get("rolling_type")
 
-        num_period_compare = fd.get("num_period_compare")
-        if num_period_compare:
-            num_period_compare = int(num_period_compare)
-            prt = fd.get('period_ratio_type')
-            if prt and prt == 'growth':
-                df = (df / df.shift(num_period_compare)) - 1
-            elif prt and prt == 'value':
-                df = df - df.shift(num_period_compare)
-            else:
-                df = df / df.shift(num_period_compare)
+        #if rolling_type in ('mean', 'std', 'sum') and rolling_periods:
+        #    if rolling_type == 'mean':
+        #        df = pd.rolling_mean(df, int(rolling_periods), min_periods=0)
+        #    elif rolling_type == 'std':
+        #        df = pd.rolling_std(df, int(rolling_periods), min_periods=0)
+        #    elif rolling_type == 'sum':
+        #        df = pd.rolling_sum(df, int(rolling_periods), min_periods=0)
+        #elif rolling_type == 'cumsum':
+        #    df = df.cumsum()
 
-            df = df[num_period_compare:]
+        #num_period_compare = fd.get("num_period_compare")
+        #if num_period_compare:
+        #    num_period_compare = int(num_period_compare)
+        #    prt = fd.get('period_ratio_type')
+        #    if prt and prt == 'growth':
+        #        df = (df / df.shift(num_period_compare)) - 1
+        #    elif prt and prt == 'value':
+        #        df = df - df.shift(num_period_compare)
+        #    else:
+        #        df = df / df.shift(num_period_compare)
+
+        #    df = df[num_period_compare:]
 
         chart_data = self.to_series(df)
 
