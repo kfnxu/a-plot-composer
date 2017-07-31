@@ -1107,7 +1107,16 @@ class NVD3MultiChartViz(NVD3Viz):
                   if ( plot_type_id == '' ):
                        #plot_type_id = row[df.columns[2]]
                        plot_type_id = row['plot_type_id'] 
-                  v = { "x": row['__timestamp'], "y":row['avg__y'] }
+                  v = { 
+                         "x": row['__timestamp'],
+                         "y":row['avg__y'],
+                         "size": row['avg__x_std'],
+                         "high": row['avg__y_std'],
+                         "shape": "cross",  
+
+                       }
+                  print('shape dataset')
+                  print(v)
                   values.append(v)
             print('--value')
             print(values)
