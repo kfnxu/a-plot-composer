@@ -1107,11 +1107,17 @@ class NVD3MultiChartViz(NVD3Viz):
                   if ( plot_type_id == '' ):
                        #plot_type_id = row[df.columns[2]]
                        plot_type_id = row['plot_type_id'] 
+                  size = 1
+                  high = 1
+                  if 'avg__x_std' in row:
+                       size = row['avg__x_std']
+                  if 'avg__y_std' in row:
+                       high = row['avg__y_std']
                   v = { 
                          "x": row['__timestamp'],
                          "y":row['avg__y'],
-                         "size": row['avg__x_std'],
-                         "high": row['avg__y_std'],
+                         "size": size,
+                         "high": high,
                          "shape": "cross",  
 
                        }
