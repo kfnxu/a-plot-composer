@@ -54,7 +54,7 @@ const LeftDrawer = (props) => {
       docked={true}
       open={navDrawerOpen}>
         <div style={styles.logo}>
-          Feature List 
+          Workflow 
         </div>
         <div>
           {props.menus.map((menu, index) =>
