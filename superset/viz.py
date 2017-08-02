@@ -65,6 +65,9 @@ class BaseViz(object):
         if not query_obj:
             query_obj = self.query_obj()
 
+        print('BaseViz')
+        print(query_obj)
+
         self.error_msg = ""
         self.results = None
 
@@ -1071,6 +1074,87 @@ class NVD3MultiChartViz(NVD3Viz):
     verbose_name = _("MultiChart")
     is_timeseries = True
 
+    # overite parent query_obj
+    def query_obj(self):
+        """Building a query object"""
+        form_data = self.form_data
+        groupby = form_data.get("groupby") or []
+        #groupby = []
+        metrics = form_data.get("metrics") or []
+
+        # extra_filters are temporary/contextual filters that are external
+        # to the slice definition. We use those for dynamic interactive
+        # filters like the ones emitted by the "Filter Box" visualization
+        extra_filters = self.get_extra_filters()
+        granularity = (
+            form_data.get("granularity") or form_data.get("granularity_sqla")
+        )
+        limit = int(form_data.get("limit") or 0)
+        timeseries_limit_metric = form_data.get("timeseries_limit_metric")
+        row_limit = int(
+            form_data.get("row_limit") or config.get("ROW_LIMIT"))
+
+        # __form and __to are special extra_filters that target time
+        # boundaries. The rest of extra_filters are simple
+        # [column_name in list_of_values]. `__` prefix is there to avoid
+        # potential conflicts with column that would be named `from` or `to`
+        since = (
+            extra_filters.get('__from') or
+            form_data.get("since") or
+            config.get("SUPERSET_DEFAULT_SINCE", "1 year ago")
+        )
+
+        from_dttm = utils.parse_human_datetime(since)
+        now = datetime.now()
+        if from_dttm > now:
+            from_dttm = now - (from_dttm - now)
+        until = extra_filters.get('__to') or form_data.get("until", "now")
+        to_dttm = utils.parse_human_datetime(until)
+        if from_dttm > to_dttm:
+            raise Exception("From date cannot be larger than to date")
+
+        # extras are used to query elements specific to a datasource type
+        # for instance the extra where clause that applies only to Tables
+        extras = {
+            'where': form_data.get("where", ''),
+            'having': form_data.get("having", ''),
+            'having_druid': form_data.get('having_filters') \
+                if 'having_filters' in form_data else [],
+            'time_grain_sqla': form_data.get("time_grain_sqla", ''),
+            'druid_time_origin': form_data.get("druid_time_origin", ''),
+        }
+
+        filters = form_data['filters'] if 'filters' in form_data \
+                else []
+        for col, vals in self.get_extra_filters().items():
+            if not (col and vals) or col.startswith('__'):
+                continue
+            elif col in self.datasource.filterable_column_names:
+                # Quote values with comma to avoid conflict
+                filters += [{
+                    'col': col,
+                    'op': 'in',
+                    'val': vals,
+                }]
+        d = {
+            'granularity': granularity,
+            'from_dttm': from_dttm,
+            'to_dttm': to_dttm,
+            'is_timeseries': self.is_timeseries,
+            'groupby': groupby,
+            'metrics': metrics,
+            'row_limit': row_limit,
+            'filter': filters,
+            'timeseries_limit': limit,
+            'extras': extras,
+            'timeseries_limit_metric': timeseries_limit_metric,
+            'form_data': form_data,
+        }
+        print('NVD3MultiChartViz query_obj')
+        print(d)
+
+        return d
+
     def to_series(self, df, classed='', title_suffix=''):
 
         # todo change to format to sequence rather than column-name:
@@ -1136,7 +1220,7 @@ class NVD3MultiChartViz(NVD3Viz):
             elif ( plot_type_id == 4 ):
                  plot_type = 'bar'
             else: 
-                 plot_type = 'line'
+                 plot_type = 'scatter'
 
             d = {
                 "key": name,
